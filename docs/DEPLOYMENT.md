@@ -13,13 +13,13 @@ git add -A
 git commit -m "SHIVAM.OS: initial release"
 # Create an empty repository on github.com (no README), then:
 git branch -M main
-git remote add origin https://github.com/shivampatil4972/shivam-os.git
+git remote add origin https://github.com/shivampatil4972/Shivam_OS.git
 git push -u origin main
 ```
 
 The workflow in `.github/workflows/ci.yml` then runs type-checking, linting,
 unit tests, the production build and the Playwright suite on every push and
-pull request. It has **not** run yet, because the repository has not been pushed.
+pull request. Its first run (commit `fb53f7f`, 3 November 2026) passed every step on Ubuntu.
 
 ## 2. Deploy on Vercel
 

@@ -335,15 +335,17 @@
     },
     {
       "metrics": [],
-      "details": [],
+      "details": [
+        "https://github.com/shivampatil4972/Shivam_OS/actions/runs/41562978531"
+      ],
       "id": "ci",
       "title": "Continuous integration on GitHub Actions",
       "category": "tests",
       "command": ".github/workflows/ci.yml",
-      "ranAt": null,
-      "durationMs": null,
-      "status": "unavailable",
-      "summary": "A workflow is included, but it has not run: the repository has not been pushed to GitHub yet."
+      "ranAt": "2026-11-03T01:56:40Z",
+      "durationMs": 437000,
+      "status": "passed",
+      "summary": "Latest run on main (fb53f7f): success. Typecheck, lint, unit tests, build and the Playwright suite on Ubuntu."
     }
   ]
 }

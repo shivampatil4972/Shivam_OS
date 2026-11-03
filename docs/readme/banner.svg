@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="380" viewBox="0 0 1280 380" role="img" aria-label="SHIVAM.OS — a developer operating system: the engineering portfolio of Shivam Patil">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1430"/>
+      <stop offset="0.55" stop-color="#060912"/>
+      <stop offset="1" stop-color="#0a0f1f"/>
+    </linearGradient>
+    <linearGradient id="ribbonA" x1="0" y1="0" x2="1" y2="0.3">
+      <stop offset="0" stop-color="#2f6bff" stop-opacity="0"/>
+      <stop offset="0.4" stop-color="#2f6bff" stop-opacity="0.85"/>
+      <stop offset="0.75" stop-color="#8b5cf6" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="ribbonB" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#14b8d6" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#14b8d6" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#2f6bff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="blur" x="-20%" y="-60%" width="140%" height="220%">
+      <feGaussianBlur stdDeviation="34"/>
+    </filter>
+    <linearGradient id="logo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7fb0ff"/>
+      <stop offset="1" stop-color="#7a5cf0"/>
+    </linearGradient>
+    <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.42"/>
+      <stop offset="0.5" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="title" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#c9d8ff"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.04"/>
+    </linearGradient>
+    <clipPath id="card"><rect width="1280" height="380" rx="28"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#card)">
+    <rect width="1280" height="380" fill="url(#bg)"/>
+    <g filter="url(#blur)">
+      <path d="M-80 250C180 120 420 110 650 170s470 70 760-110l30 120C1150 360 900 330 660 270S220 230-60 380Z" fill="url(#ribbonA)"/>
+      <path d="M380 420c200-150 460-170 700-90s250-20 300-90l20 160H360Z" fill="url(#ribbonB)"/>
+      <ellipse cx="1120" cy="40" rx="240" ry="90" fill="#8b5cf6" opacity="0.35"/>
+    </g>
+    <path d="M-20 290C260 170 520 190 760 230s420 0 560-120" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1.4"/>
+    <path d="M-20 310C280 200 540 220 780 255s420-10 540-110" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+
+    <!-- Logo tile -->
+    <g transform="translate(96 104)">
+      <rect width="120" height="120" rx="27" fill="url(#logo)"/>
+      <rect width="120" height="120" rx="27" fill="url(#gloss)"/>
+      <rect x="0.75" y="0.75" width="118.5" height="118.5" rx="26.5" fill="none" stroke="#fff" stroke-opacity="0.35" stroke-width="1.5"/>
+      <path d="M78 42c-3.6-4.7-9.6-7.2-16.6-7.2-10 0-17.1 5.1-17.1 12.8 0 17.3 34.9 9.4 34.9 26.3 0 8.1-7.5 13.5-18.2 13.5-8.1 0-14.6-3-18.2-8.6" fill="none" stroke="#fff" stroke-width="9.6" stroke-linecap="round"/>
+    </g>
+
+    <!-- Wordmark -->
+    <text x="252" y="170" fill="url(#title)" font-family="'Segoe UI Variable Display','SF Pro Display',-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif" font-size="76" font-weight="700" letter-spacing="1">SHIVAM.OS</text>
+    <text x="256" y="216" fill="#b3bdcc" font-family="'Segoe UI Variable Text','SF Pro Text',-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif" font-size="25">A developer operating system — the engineering portfolio of Shivam Patil</text>
+
+    <!-- Chips -->
+    <g font-family="'Segoe UI Variable Text','SF Pro Text',-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif" font-size="17" font-weight="600" fill="#dfe8ff">
+      <g transform="translate(256 252)">
+        <rect width="168" height="38" rx="19" fill="#ffffff" fill-opacity="0.07" stroke="url(#edge)"/>
+        <text x="84" y="25" text-anchor="middle">16 apps</text>
+      </g>
+      <g transform="translate(436 252)">
+        <rect width="200" height="38" rx="19" fill="#ffffff" fill-opacity="0.07" stroke="url(#edge)"/>
+        <text x="100" y="25" text-anchor="middle">14 case studies</text>
+      </g>
+      <g transform="translate(648 252)">
+        <rect width="196" height="38" rx="19" fill="#ffffff" fill-opacity="0.07" stroke="url(#edge)"/>
+        <text x="98" y="25" text-anchor="middle">Live ML experiment</text>
+      </g>
+      <g transform="translate(856 252)">
+        <rect width="230" height="38" rx="19" fill="#ffffff" fill-opacity="0.07" stroke="url(#edge)"/>
+        <text x="115" y="25" text-anchor="middle">Architecture X-Ray</text>
+      </g>
+    </g>
+  </g>
+  <rect x="0.75" y="0.75" width="1278.5" height="378.5" rx="27.5" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1.5"/>
+</svg>

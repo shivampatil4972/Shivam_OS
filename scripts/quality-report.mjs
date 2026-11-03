@@ -272,7 +272,34 @@ stopServer();
 add({ id: "screen-reader", title: "Manual screen-reader testing (NVDA, VoiceOver)", category: "accessibility", command: "manual", ranAt: null, durationMs: null, status: "not-run", summary: "Not performed. Automated axe scans and keyboard tests do not replace testing with assistive technology." });
 add({ id: "real-devices", title: "Real-device testing (iOS Safari, Android Chrome)", category: "tests", command: "manual", ranAt: null, durationMs: null, status: "not-run", summary: "Not performed. Mobile behaviour is tested in Chrome's Pixel 7 emulation only; WebKit/Safari has not been tested." });
 add({ id: "contact-delivery", title: "Contact form delivery through a live provider", category: "tests", command: "—", ranAt: null, durationMs: null, status: process.env.FORMSPREE_FORM_ID || process.env.RESEND_API_KEY ? "not-run" : "unavailable", summary: "No mail provider is configured for this build, so real delivery has not been exercised. The form says so instead of claiming success; the delivery code is unit-tested against a stubbed provider." });
-add({ id: "ci", title: "Continuous integration on GitHub Actions", category: "tests", command: ".github/workflows/ci.yml", ranAt: null, durationMs: null, status: "unavailable", summary: "A workflow is included, but it has not run: the repository has not been pushed to GitHub yet." });
+await (async () => {
+  const base = { id: "ci", title: "Continuous integration on GitHub Actions", category: "tests", command: ".github/workflows/ci.yml" };
+  const remote = spawnSync("git", ["remote", "get-url", "origin"], { cwd: root, encoding: "utf8" }).stdout?.trim() ?? "";
+  const slug = /github\.com[/:]([^/]+\/[^/.]+)/.exec(remote)?.[1];
+  if (!slug) {
+    add({ ...base, ranAt: null, durationMs: null, status: "unavailable", summary: "The repository has no GitHub remote, so CI has not run." });
+    return;
+  }
+  try {
+    const res = await fetch(`https://api.github.com/repos/${slug}/actions/runs?per_page=1`, { headers: { Accept: "application/vnd.github+json" } });
+    const run = res.ok ? (await res.json()).workflow_runs?.[0] : null;
+    if (!run) {
+      add({ ...base, ranAt: null, durationMs: null, status: "not-run", summary: `No workflow run found for ${slug}.` });
+      return;
+    }
+    const done = run.status === "completed";
+    add({
+      ...base,
+      ranAt: run.run_started_at ?? run.created_at,
+      durationMs: done ? Date.parse(run.updated_at) - Date.parse(run.run_started_at ?? run.created_at) : null,
+      status: !done ? "not-run" : run.conclusion === "success" ? "passed" : "failed",
+      summary: done ? `Latest run on ${run.head_branch} (${run.head_sha.slice(0, 7)}): ${run.conclusion}. Typecheck, lint, unit tests, build and the Playwright suite on Ubuntu.` : `Latest run on ${run.head_branch} (${run.head_sha.slice(0, 7)}) is still ${run.status}.`,
+      details: [run.html_url],
+    });
+  } catch {
+    add({ ...base, ranAt: null, durationMs: null, status: "unavailable", summary: "The GitHub API could not be reached to read the latest CI run." });
+  }
+})();
 
 // Report ---------------------------------------------------------------------------------------
 let commit = null;
