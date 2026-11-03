@@ -1,0 +1,328 @@
+{
+  "user": "shivampatil4972",
+  "fetchedAt": "2026-11-02T16:15:05.121Z",
+  "repos": [
+    {
+      "name": "VAYORA-",
+      "description": null,
+      "url": "https://github.com/shivampatil4972/VAYORA-",
+      "homepage": null,
+      "language": "Java",
+      "languages": {
+        "Java": 1002238,
+        "TypeScript": 891904,
+        "Python": 257147,
+        "JavaScript": 52097,
+        "CSS": 9880,
+        "PLpgSQL": 5760,
+        "Shell": 5281,
+        "HTML": 5020,
+        "Dockerfile": 2815
+      },
+      "stars": 0,
+      "forks": 0,
+      "createdAt": "2026-10-22T01:35:48Z",
+      "pushedAt": "2026-10-24T05:49:14Z",
+      "defaultBranch": "main",
+      "commits": 247,
+      "latestCommit": {
+        "sha": "2df443d",
+        "message": "Keep the palette's button off phones",
+        "date": "2026-10-24T05:32:52Z"
+      }
+    },
+    {
+      "name": "support-ticketing-tool",
+      "description": null,
+      "url": "https://github.com/shivampatil4972/support-ticketing-tool",
+      "homepage": null,
+      "language": "JavaScript",
+      "languages": {
+        "JavaScript": 265569,
+        "CSS": 8023,
+        "HTML": 962,
+        "Batchfile": 871
+      },
+      "stars": 0,
+      "forks": 0,
+      "createdAt": "2026-10-10T06:21:49Z",
+      "pushedAt": "2026-10-10T07:29:02Z",
+      "defaultBranch": "main",
+      "commits": 3,
+      "latestCommit": {
+        "sha": "07c5025",
+        "message": "Rewrite README with screenshots, diagrams and troubleshooting",
+        "date": "2026-10-10T07:28:58Z"
+      }
+    },
+    {
+      "name": "VAYORA",
+      "description": null,
+      "url": "https://github.com/shivampatil4972/VAYORA",
+      "homepage": null,
+      "language": "Python",
+      "languages": {
+        "Python": 176807,
+        "Java": 93599,
+        "TypeScript": 10311,
+        "CSS": 5818,
+        "Dockerfile": 2824,
+        "JavaScript": 2132,
+        "Batchfile": 1039,
+        "HTML": 360
+      },
+      "stars": 0,
+      "forks": 0,
+      "createdAt": "2026-10-01T07:07:03Z",
+      "pushedAt": "2026-10-02T08:33:20Z",
+      "defaultBranch": "main",
+      "commits": 1,
+      "latestCommit": {
+        "sha": "8285c27",
+        "message": "Complete Phase 4 through 10",
+        "date": "2026-10-02T08:08:30Z"
+      }
+    },
+    {
+      "name": "recoverai-agentic-revenue-recovery",
+      "description": null,
+      "url": "https://github.com/shivampatil4972/recoverai-agentic-revenue-recovery",
+      "homepage": null,
+      "language": null,
+      "languages": {},
+      "stars": 0,
+      "forks": 0,
+      "createdAt": "2026-08-24T09:00:29Z",
+      "pushedAt": "2026-08-24T09:00:30Z",
+      "defaultBranch": "main",
+      "commits": null,
+      "latestCommit": null
+    },
+    {
+      "name": "support-ticket-system",
+      "description": null,
+      "url": "https://github.com/shivampatil4972/support-ticket-system",
+      "homepage": null,
+      "language": "JavaScript",
+      "languages": {
+        "JavaScript": 161605,
+        "CSS": 9344,
+        "HTML": 702,
+        "Batchfile": 572
+      },
+      "stars": 0,
+      "forks": 0,
+      "createdAt": "2026-08-15T02:20:44Z",
+      "pushedAt": "2026-08-15T02:21:21Z",
+      "defaultBranch": "main",
+      "commits": 1,
+      "latestCommit": {
+        "sha": "7cd7a03",
+        "message": "Initial commit: Support Ticket System with AI Triage",
+        "date": "2026-08-15T02:21:14Z"
+      }
+    },
+    {
+      "name": "NeuroRoute-AI",
+      "description": null,
+      "url": "https://github.com/shivampatil4972/NeuroRoute-AI",
+      "homepage": null,
+      "language": "Python",
+      "languages": {
+        "Python": 110590,
+        "JavaScript": 91826,
+        "CSS": 10372,
+        "HTML": 8124
+      },
+      "stars": 0,
+      "forks": 0,
+      "createdAt": "2026-08-03T02:10:49Z",
+      "pushedAt": "2026-08-03T02:35:52Z",
+      "defaultBranch": "main",
+      "commits": 4,
+      "latestCommit": {
+        "sha": "ea75fa9",
+        "message": "Enhance multimodal error handling: catch OS DLL blocks (Windows App Control) with automatic graceful fallback",
+        "date": "2026-08-03T02:35:49Z"
+      }
+    },
+    {
+      "name": "PhonePe-Data-Analytics-PowerBI",
+      "description": null,
+      "url": "https://github.com/shivampatil4972/PhonePe-Data-Analytics-PowerBI",
+      "homepage": null,
+      "language": null,
+      "languages": {},
+      "stars": 0,
+      "forks": 0,
+      "createdAt": "2026-07-17T02:33:41Z",
+      "pushedAt": "2026-07-20T08:50:56Z",
+      "defaultBranch": "main",
+      "commits": 2,
+      "latestCommit": {
+        "sha": "244c0b9",
+        "message": "Add detailed README for project",
+        "date": "2026-07-20T08:50:53Z"
+      }
+    },
+    {
+      "name": "Starbucks-Data-Analytics-PowerBI",
+      "description": null,
+      "url": "https://github.com/shivampatil4972/Starbucks-Data-Analytics-PowerBI",
+      "homepage": null,
+      "language": null,
+      "languages": {},
+      "stars": 0,
+      "forks": 0,
+      "createdAt": "2026-07-17T02:39:27Z",
+      "pushedAt": "2026-07-20T08:48:40Z",
+      "defaultBranch": "main",
+      "commits": 2,
+      "latestCommit": {
+        "sha": "a536632",
+        "message": "docs: add detailed README for resume",
+        "date": "2026-07-20T08:48:17Z"
+      }
+    },
+    {
+      "name": "placement-prediction-portal",
+      "description": "Placement Prediction Portal using Machine Learning",
+      "url": "https://github.com/shivampatil4972/placement-prediction-portal",
+      "homepage": null,
+      "language": "Python",
+      "languages": {
+        "Python": 141265,
+        "HTML": 111450,
+        "CSS": 59121,
+        "JavaScript": 18701,
+        "Dockerfile": 874,
+        "PowerShell": 687,
+        "Batchfile": 398
+      },
+      "stars": 0,
+      "forks": 0,
+      "createdAt": "2026-03-13T11:48:15Z",
+      "pushedAt": "2026-07-18T07:48:46Z",
+      "defaultBranch": "main",
+      "commits": 5,
+      "latestCommit": {
+        "sha": "723f1a4",
+        "message": "Major Release: Enterprise features (Docker, PyTest), AI Resume Parser upgrade, Profile Picture uploads, and Security Hardening",
+        "date": "2026-07-18T07:48:43Z"
+      }
+    },
+    {
+      "name": "Road-Accident-Analysis-Dashboard-Tableau",
+      "description": null,
+      "url": "https://github.com/shivampatil4972/Road-Accident-Analysis-Dashboard-Tableau",
+      "homepage": null,
+      "language": null,
+      "languages": {},
+      "stars": 0,
+      "forks": 0,
+      "createdAt": "2026-07-18T06:53:53Z",
+      "pushedAt": "2026-07-18T06:59:40Z",
+      "defaultBranch": "main",
+      "commits": 2,
+      "latestCommit": {
+        "sha": "3e6f46e",
+        "message": "Update README",
+        "date": "2026-07-18T06:59:37Z"
+      }
+    },
+    {
+      "name": "bachatgat-management-system",
+      "description": "Bachat Gat Smart Management System using PHP and MySQL",
+      "url": "https://github.com/shivampatil4972/bachatgat-management-system",
+      "homepage": null,
+      "language": "PHP",
+      "languages": {
+        "PHP": 646744,
+        "Hack": 59044,
+        "CSS": 10515,
+        "JavaScript": 1351
+      },
+      "stars": 0,
+      "forks": 0,
+      "createdAt": "2026-03-13T11:22:09Z",
+      "pushedAt": "2026-07-18T06:34:58Z",
+      "defaultBranch": "main",
+      "commits": 8,
+      "latestCommit": {
+        "sha": "4c5fc6d",
+        "message": "docs: add latest updates section highlighting recent fixes and cleanup",
+        "date": "2026-07-18T06:34:55Z"
+      }
+    },
+    {
+      "name": "Student-Result-Management-System-using-C-and-web-Integration",
+      "description": "C++ Student Management System mini project with a menu-driven console app to add, view, search, update, and delete student records. It calculates total, percentage, grade, and pass/fail status, saves data in files, and generates a responsive HTML report with CSS/JS features like search, filters, sorting, and print support.",
+      "url": "https://github.com/shivampatil4972/Student-Result-Management-System-using-C-and-web-Integration",
+      "homepage": null,
+      "language": "C",
+      "languages": {
+        "C": 9554383,
+        "C++": 1759416,
+        "JavaScript": 16432,
+        "CSS": 14329,
+        "HTML": 1515,
+        "Batchfile": 377
+      },
+      "stars": 0,
+      "forks": 0,
+      "createdAt": "2026-04-08T02:52:44Z",
+      "pushedAt": "2026-07-17T04:46:59Z",
+      "defaultBranch": "main",
+      "commits": 3,
+      "latestCommit": {
+        "sha": "ee912e6",
+        "message": "Fix VSCode Intellisense paths for includes",
+        "date": "2026-07-17T04:46:56Z"
+      }
+    },
+    {
+      "name": "DYPCET-Student-Placement-Analytics-PowerBI",
+      "description": "Interactive Student Placement Analytics Dashboard developed using Microsoft Power BI.",
+      "url": "https://github.com/shivampatil4972/DYPCET-Student-Placement-Analytics-PowerBI",
+      "homepage": null,
+      "language": null,
+      "languages": {},
+      "stars": 0,
+      "forks": 0,
+      "createdAt": "2026-06-24T12:13:41Z",
+      "pushedAt": "2026-06-24T12:15:57Z",
+      "defaultBranch": "main",
+      "commits": 3,
+      "latestCommit": {
+        "sha": "f5be154",
+        "message": "Update README.md",
+        "date": "2026-06-24T12:15:57Z"
+      }
+    }
+  ],
+  "ci": {
+    "repo": "VAYORA-",
+    "sha": "2df443d",
+    "conclusion": "failure",
+    "date": "2026-10-24T05:49:16Z",
+    "url": "https://github.com/shivampatil4972/VAYORA-/actions/runs/40067750913",
+    "jobs": [
+      {
+        "name": "Gateway (lint, tests)",
+        "conclusion": "success"
+      },
+      {
+        "name": "core-api (Java 21, real PostGIS, MongoDB and Redis)",
+        "conclusion": "success"
+      },
+      {
+        "name": "Python (ruff, events, simulator, model, experiments, intel)",
+        "conclusion": "success"
+      },
+      {
+        "name": "Web (types, lint, tests, build)",
+        "conclusion": "failure"
+      }
+    ]
+  }
+}

@@ -1,0 +1,155 @@
+import { placeholder } from "../placeholder";
+import type { ProjectInput } from "../schema";
+
+const LOCAL = "Local repository 'INTELLIGRADE AI' (19 commits, no remote yet), read 2026-10-25";
+
+export const intelligrade: ProjectInput = {
+  id: "intelligrade",
+  slug: "intelligrade-ai",
+  title: "IntelliGrade AI",
+  tagline: "Examination evaluation where OCR and retrieval suggest marks with evidence — and a teacher approves every one.",
+  summary:
+    "Teachers define exams, questions and rubrics; students upload scanned answer sheets; the platform extracts text with OCR, retrieves the teacher's reference material and suggests criterion-level marks with cited evidence. The AI never publishes marks: a teacher reviews, edits and approves each evaluation.",
+  category: "ai-ml",
+  secondaryCategories: ["full-stack"],
+  status: "in-development",
+  statusNote: "Phases 0–5 complete; Phase 6 (analytics and hardening) in progress. The Claude provider is unit-tested but has never been called against the live API.",
+  featured: true,
+  rank: 2,
+  period: { start: "2026-10", end: "ongoing" },
+  team: { size: null, note: "All 19 commits are authored by Shivam. " + placeholder("Confirm whether this is a solo or team project.") },
+  role: "Full-stack and AI engineer",
+  technologies: [
+    "Java 21",
+    "Spring Boot 4.1",
+    "Spring Security",
+    "JPA",
+    "Flyway",
+    "React 19",
+    "TypeScript",
+    "Vite",
+    "TanStack Query",
+    "Tailwind CSS",
+    "Python 3.12",
+    "FastAPI",
+    "Pydantic",
+    "Tesseract OCR",
+    "FastEmbed (bge-small-en-v1.5)",
+    "PostgreSQL 16",
+    "pgvector",
+    "Docker Compose",
+    "Playwright",
+  ],
+  contribution: {
+    summary: "Designed and implemented the platform phase by phase; every commit in the repository is authored by Shivam.",
+    items: [
+      "Spring Boot API with JWT access tokens and rotating, hashed refresh cookies; role-based authorisation and audit log",
+      "PostgreSQL job queue claimed with FOR UPDATE SKIP LOCKED, leases, bounded retries and idempotent enqueue",
+      "OCR pipeline (PyMuPDF rendering, OpenCV deskew/contrast, Tesseract) and an engine benchmark across three engines",
+      "Retrieval with local embeddings stored in pgvector, scoped by exam, question and rubric version",
+      "Rubric-grounded evaluation with strict, twice-validated structured output and a teacher review workflow",
+    ],
+  },
+  aiAssistance: "Built with an AI coding assistant: all 19 commits carry a Co-Authored-By: Claude trailer.",
+  problem:
+    "Marking scanned answer sheets is slow and inconsistent, but handing marks to a language model is unacceptable: models can be wrong, can be manipulated by text inside an answer, and cannot be held accountable.",
+  targetUsers: ["Teachers marking written examinations", "Students receiving marks and feedback", "Institution administrators"],
+  solution:
+    "Treat AI as a suggestion engine bounded by validators: every suggested mark must cite answer lines that were actually sent, stay within criterion limits, and wait for a teacher's approval before anything is published.",
+  workflows: [
+    "Teacher creates an examination with questions, versioned rubrics and reference answers, assigns students and moves it through its lifecycle.",
+    "Student uploads scanned answer sheets (PDF/JPEG/PNG) and hands them in; a background job extracts and segments the text by question.",
+    "Teacher sees the original sheet beside the extracted text and corrects it, then requests an evaluation.",
+    "Teacher reviews suggested marks, feedback, evidence and retrieved passages; gives their own marks or explicitly accepts, approves and publishes.",
+    "A published result can be corrected and republished as a new version with a full review history.",
+  ],
+  techRationale: [
+    { tech: "PostgreSQL job queue", why: "Transactional consistency between job state and domain state with no extra infrastructure; a broker only if measurements show the need (ADR-007)." },
+    { tech: "Local embeddings (FastEmbed)", why: "Reference text and answers are not sent to an external service for retrieval." },
+    { tech: "Exact vector search", why: "A question has only a handful of passages; an approximate index combined with a scope filter can return too few (ADR-027)." },
+    { tech: "Tesseract", why: "Chosen by benchmark: lowest character error on the test set, ~20× faster than the next engine, 84 MB peak memory on an 8 GB Docker host." },
+    { tech: "Internal-only AI service", why: "The browser talks only to the backend; the AI service requires a service token compared in constant time and fails closed." },
+  ],
+  architecture: {
+    summary:
+      "React SPA → Spring Boot backend (public API, authorisation, domain state, job orchestration) → internal FastAPI AI service (OCR, segmentation, retrieval, LLM evaluation) → PostgreSQL 16 with pgvector as system of record and vector index.",
+    dataFlow: [
+      "Student upload → backend validates extension, declared type and file signature → private storage + OCR job (QUEUED).",
+      "Worker claims job (FOR UPDATE SKIP LOCKED) → AI service OCR + segmentation → extraction persisted.",
+      "Evaluation job: chunk + embed reference answer once per rubric version → nearest passages WHERE exam, question, rubric version.",
+      "AI service evaluates (question, rubric, numbered answer lines, passages) → validated suggestion or typed error → backend validates again.",
+      "Write-once suggestions, evidence and retrieved passages stored in the transaction that completes the job.",
+    ],
+    xrayId: "intelligrade",
+  },
+  implementation: [
+    "Uploads validated by extension, declared type and file signature; size, page and decoded-pixel limits; SHA-256 de-duplication; originals immutable after hand-in.",
+    "Invalid model output is rejected, never clamped or repaired: one retry, then the question is marked failed for manual marking.",
+    "The model never computes totals — it returns per-criterion marks and the service sums them.",
+    "Prompt-injection defences: all instructions in the system prompt, answer text sent as data, no tools, validators bound the result, and a keyword flag for text addressed to a marker.",
+    "A deterministic keyword-counting test adapter lets the whole flow run without a provider key; its output is labelled as test output everywhere and refused in production.",
+  ],
+  challenges: [
+    { title: "HTTP/2 upgrade rejected", detail: "OCR calls failed against the real AI service because the JDK HTTP client attempted an HTTP/2 upgrade that uvicorn rejects for POSTs; health checks had hidden it. Pinned the client to HTTP/1.1." },
+    { title: "Blank-page false positives", detail: "Blank-page detection treated a page with one short line as blank, which would have dropped short answers. A page is now blank only below 60 dark pixels after speck removal." },
+    { title: "Mislabelled uploads", detail: "The renderer accepted PNG bytes recorded as a PDF and a truncated PNG. File signatures are now checked against the recorded type and images fully decoded." },
+  ],
+  tradeoffs: [
+    { decision: "Tesseract as default OCR engine", alternatives: "PaddleOCR (better WER, 3 GB memory), RapidOCR", cost: "Chosen on printed text only; handwriting — most real answer sheets — is unmeasured." },
+    { decision: "Teacher approval required for every result", alternatives: "Auto-publish above a confidence threshold", cost: "Slower than full automation, by design." },
+    { decision: "No Redis or broker for jobs", alternatives: "RabbitMQ / Redis queues", cost: "Throughput bounded by PostgreSQL; acceptable until measured otherwise." },
+  ],
+  testing: {
+    summary: "Four suites recorded passing on 2026-10-15 in docs/implementation-plan.md. The GitHub Actions workflow has not run because the repository has no remote yet.",
+    suites: [
+      { name: "Backend", detail: "./mvnw test with Testcontainers pgvector/pgvector:pg16", count: 112, status: "reported-passing", asOf: "2026-10-15", source: "docs/implementation-plan.md" },
+      { name: "AI service", detail: "ruff + pytest on Python 3.12 with Tesseract 5.5 and the real embedding model", count: 144, status: "reported-passing", asOf: "2026-10-15", source: "docs/implementation-plan.md" },
+      { name: "Frontend unit", detail: "oxlint, unit tests, type-check and build", count: 78, status: "reported-passing", asOf: "2026-10-15", source: "docs/implementation-plan.md" },
+      { name: "End-to-end", detail: "Playwright/Chromium against the Compose stack: real OCR and embeddings, test-adapter marking, publication", count: 13, status: "reported-passing", asOf: "2026-10-15", source: "docs/implementation-plan.md" },
+    ],
+  },
+  results: [
+    { label: "OCR CER (Tesseract)", value: "0.44%", context: "12 synthetic printed pages, four conditions; WER 2.72%, 0.65 s/page. PaddleOCR 1.48% CER at 74.8 s/page.", source: "docs/ai-evaluation.md §3.1" },
+    { label: "Retrieval recall@1", value: "5/5", context: "A sanity test with paraphrased queries — five queries cannot support a general claim.", source: "docs/ai-evaluation.md §3.3" },
+    { label: "Keyword baseline MAE", value: "2.14 marks", context: "On 25 synthetic answers written by the author: every paraphrased correct answer scored 0. This is the baseline an AI provider must beat.", source: "docs/ai-evaluation.md §3.4" },
+    { label: "AI marking quality", value: "Not measured", context: "No API key has been available, so the Claude provider has never run against the live API.", source: "docs/ai-evaluation.md §3.5" },
+  ],
+  limitations: [
+    "Handwriting accuracy is unmeasured; the OCR engine was chosen on printed text only.",
+    "AI marking quality has not been measured on real answers graded by teachers.",
+    "Single-column English layouts only; diagrams, tables and two-dimensional equations are not handled.",
+    "Analytics, admin job monitoring, failure-path end-to-end tests and deployment configuration are not built yet.",
+  ],
+  lessons: [
+    "Health checks can hide real failures — exercise the actual call path end to end.",
+    "Label test doubles loudly in the product, not only in code, so nobody demos a keyword counter as AI.",
+    "Validate model output twice, in two services, and never repair it silently.",
+  ],
+  future: [
+    "Run the marking benchmark against Claude and compare with the keyword baseline.",
+    "Validate an OCR engine on real, consented handwritten samples.",
+    "Phase 6 analytics and hardening; Phase 7 deployment and documentation.",
+  ],
+  setup: {
+    steps: ["node scripts/init-env.mjs", "docker compose up -d --build --wait", "Open http://localhost:5273"],
+    note: "Repository not yet published; " + placeholder("add the repository link once it is pushed to GitHub."),
+  },
+  links: [],
+  media: { gallery: [] },
+  evolution: [
+    { date: "2026-10-10", kind: "milestone", title: "Phase 0 — foundation", detail: "Monorepo, service skeletons, Compose, Flyway, error schemas, CI workflow and docs.", ref: "4dfe51c" },
+    { date: "2026-10-13", kind: "milestone", title: "Phases 1–2 — auth and exams", detail: "JWT with rotating refresh cookies, roles, audit log; examinations, versioned rubrics and assignments.", ref: "bac58f2" },
+    { date: "2026-10-13", kind: "experiment", title: "Phase 3 — OCR and engine benchmark", detail: "Submissions, private storage, persistent job queue; Tesseract vs PaddleOCR vs RapidOCR benchmark.", ref: "f6cb1d1" },
+    { date: "2026-10-13", kind: "fix", title: "HTTP/1.1 pin", detail: "OCR calls failed in the real stack (HTTP/2 upgrade rejected by uvicorn); found only by running it end to end and fixed in Phase 3.", ref: "Phase 3" },
+    { date: "2026-10-14", kind: "milestone", title: "Phase 4 — RAG and evaluation", detail: "Embeddings and chunking, pgvector reference index, rubric-grounded evaluation with strict validation, keyword baseline benchmark.", ref: "b56ad6f" },
+    { date: "2026-10-15", kind: "milestone", title: "Phase 5 — review and publication", detail: "Teacher marking, approval and publication; student results; versioned corrections.", ref: "b9580f1" },
+    { date: "2026-10-15", kind: "milestone", title: "Phase 6 begins", detail: "PDF report of a published result and examination analytics (backend).", ref: "6c3d68c" },
+  ],
+  evidence: [
+    { id: "ig-plan", label: "docs/implementation-plan.md", kind: "doc", note: "Phase status, test results and known limitations, dated 2026-10-15.", verifiedFrom: LOCAL },
+    { id: "ig-eval", label: "docs/ai-evaluation.md", kind: "report", note: "OCR benchmark, retrieval check and marking baseline with caveats.", verifiedFrom: LOCAL },
+    { id: "ig-adr", label: "docs/decisions.md", kind: "doc", note: "Architecture decision records (ADR-001 onward).", verifiedFrom: LOCAL },
+    { id: "ig-arch", label: "docs/architecture.md", kind: "doc", note: "Components, trust boundaries and processing flow.", verifiedFrom: LOCAL },
+  ],
+  updated: "2026-10-25",
+};

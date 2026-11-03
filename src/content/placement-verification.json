@@ -1,0 +1,7 @@
+{
+  "date": "2026-10-25",
+  "tool": "scikit-learn LogisticRegression (C = 1 / (l2 × n_train), lbfgs), numpy",
+  "script": "scripts/verify_placement_experiment.py",
+  "rows": { "train": 8000, "test": 2000 },
+  "sklearn": { "baseline_accuracy": 0.6695, "accuracy": 0.8385, "balanced_accuracy": 0.8032, "f1": 0.8827, "roc_auc": 0.8607 }
+}

@@ -1,0 +1,53 @@
+{
+  "name": "shivam-os",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SHIVAM.OS — an iOS-inspired developer operating system and engineering portfolio for Shivam Patil.",
+  "type": "module",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "assets": "node scripts/prepare-assets.mjs",
+    "snapshot:github": "node scripts/snapshot-github.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "qc": "node scripts/quality-report.mjs"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "5.2.2",
+    "lucide-react": "1.61.0",
+    "motion": "14.6.0",
+    "next": "16.4.3",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-hook-form": "7.91.0",
+    "server-only": "0.0.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1",
+    "@tailwindcss/postcss": "4.3.3",
+    "@testing-library/jest-dom": "7.0.1",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.8",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.4.3",
+    "jsdom": "30.1.3",
+    "tailwindcss": "4.3.3",
+    "typescript": "6.0.3",
+    "vitest": "5.0.5"
+  }
+}

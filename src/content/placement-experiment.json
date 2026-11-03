@@ -1,0 +1,340 @@
+{
+  "generatedAt": "2026-10-25",
+  "dataset": "github.com/shivampatil4972/placement-prediction-portal — training_data.csv",
+  "rows": 10000,
+  "results": {
+    "features": {
+      "config": {},
+      "split": {
+        "train": 8000,
+        "test": 2000,
+        "trainPositiveRate": 0.66975,
+        "testPositiveRate": 0.6695
+      },
+      "baselineTest": {
+        "accuracy": 0.6695,
+        "balancedAccuracy": 0.5,
+        "precision": 0.6695,
+        "recall": 1,
+        "f1": 0.802,
+        "rocAuc": 0.5,
+        "logLoss": 0.6345,
+        "confusion": {
+          "tp": 1339,
+          "fp": 661,
+          "tn": 0,
+          "fn": 0
+        }
+      },
+      "modelTest": {
+        "accuracy": 0.84,
+        "balancedAccuracy": 0.8039,
+        "precision": 0.8591,
+        "recall": 0.9104,
+        "f1": 0.884,
+        "rocAuc": 0.8607,
+        "logLoss": 0.4399,
+        "confusion": {
+          "tp": 1219,
+          "fp": 200,
+          "tn": 461,
+          "fn": 120
+        }
+      },
+      "modelTrain": {
+        "accuracy": 0.8553,
+        "rocAuc": 0.8684
+      },
+      "coefficients": [
+        [
+          "cgpa",
+          0.9196
+        ],
+        [
+          "internship_count",
+          0.4356
+        ],
+        [
+          "project_count",
+          0.4075
+        ],
+        [
+          "certification_count",
+          0.2746
+        ],
+        [
+          "skill_count",
+          0.504
+        ],
+        [
+          "branch_0",
+          -1.3428
+        ],
+        [
+          "branch_1",
+          -0.9389
+        ],
+        [
+          "branch_2",
+          -0.2942
+        ],
+        [
+          "branch_3",
+          0.4026
+        ],
+        [
+          "branch_4",
+          1.1159
+        ],
+        [
+          "branch_5",
+          1.6142
+        ]
+      ],
+      "runtimeMs": 186
+    },
+    "features-balanced": {
+      "config": {
+        "balanceClasses": true
+      },
+      "split": {
+        "train": 8000,
+        "test": 2000,
+        "trainPositiveRate": 0.66975,
+        "testPositiveRate": 0.6695
+      },
+      "baselineTest": {
+        "accuracy": 0.6695,
+        "balancedAccuracy": 0.5,
+        "precision": 0.6695,
+        "recall": 1,
+        "f1": 0.802,
+        "rocAuc": 0.5,
+        "logLoss": 0.6345,
+        "confusion": {
+          "tp": 1339,
+          "fp": 661,
+          "tn": 0,
+          "fn": 0
+        }
+      },
+      "modelTest": {
+        "accuracy": 0.787,
+        "balancedAccuracy": 0.798,
+        "precision": 0.9015,
+        "recall": 0.7655,
+        "f1": 0.8279,
+        "rocAuc": 0.86,
+        "logLoss": 0.4811,
+        "confusion": {
+          "tp": 1025,
+          "fp": 112,
+          "tn": 549,
+          "fn": 314
+        }
+      },
+      "modelTrain": {
+        "accuracy": 0.8108,
+        "rocAuc": 0.868
+      },
+      "coefficients": [
+        [
+          "cgpa",
+          0.839
+        ],
+        [
+          "internship_count",
+          0.3895
+        ],
+        [
+          "project_count",
+          0.375
+        ],
+        [
+          "certification_count",
+          0.2454
+        ],
+        [
+          "skill_count",
+          0.464
+        ],
+        [
+          "branch_0",
+          -1.358
+        ],
+        [
+          "branch_1",
+          -0.981
+        ],
+        [
+          "branch_2",
+          -0.3439
+        ],
+        [
+          "branch_3",
+          0.3191
+        ],
+        [
+          "branch_4",
+          0.9801
+        ],
+        [
+          "branch_5",
+          1.4306
+        ]
+      ],
+      "runtimeMs": 159
+    },
+    "cgpa-only": {
+      "config": {
+        "features": [
+          "cgpa"
+        ],
+        "includeBranch": false
+      },
+      "split": {
+        "train": 8000,
+        "test": 2000,
+        "trainPositiveRate": 0.66975,
+        "testPositiveRate": 0.6695
+      },
+      "baselineTest": {
+        "accuracy": 0.6695,
+        "balancedAccuracy": 0.5,
+        "precision": 0.6695,
+        "recall": 1,
+        "f1": 0.802,
+        "rocAuc": 0.5,
+        "logLoss": 0.6345,
+        "confusion": {
+          "tp": 1339,
+          "fp": 661,
+          "tn": 0,
+          "fn": 0
+        }
+      },
+      "modelTest": {
+        "accuracy": 0.704,
+        "balancedAccuracy": 0.605,
+        "precision": 0.7257,
+        "recall": 0.8969,
+        "f1": 0.8023,
+        "rocAuc": 0.7266,
+        "logLoss": 0.5625,
+        "confusion": {
+          "tp": 1201,
+          "fp": 454,
+          "tn": 207,
+          "fn": 138
+        }
+      },
+      "modelTrain": {
+        "accuracy": 0.7066,
+        "rocAuc": 0.7194
+      },
+      "coefficients": [
+        [
+          "cgpa",
+          0.847
+        ]
+      ],
+      "runtimeMs": 89
+    },
+    "with-leak": {
+      "config": {
+        "includeLeakyFeature": true
+      },
+      "split": {
+        "train": 8000,
+        "test": 2000,
+        "trainPositiveRate": 0.66975,
+        "testPositiveRate": 0.6695
+      },
+      "baselineTest": {
+        "accuracy": 0.6695,
+        "balancedAccuracy": 0.5,
+        "precision": 0.6695,
+        "recall": 1,
+        "f1": 0.802,
+        "rocAuc": 0.5,
+        "logLoss": 0.6345,
+        "confusion": {
+          "tp": 1339,
+          "fp": 661,
+          "tn": 0,
+          "fn": 0
+        }
+      },
+      "modelTest": {
+        "accuracy": 0.878,
+        "balancedAccuracy": 0.8503,
+        "precision": 0.8908,
+        "recall": 0.932,
+        "f1": 0.9109,
+        "rocAuc": 0.8693,
+        "logLoss": 0.4297,
+        "confusion": {
+          "tp": 1248,
+          "fp": 153,
+          "tn": 508,
+          "fn": 91
+        }
+      },
+      "modelTrain": {
+        "accuracy": 0.8865,
+        "rocAuc": 0.8759
+      },
+      "coefficients": [
+        [
+          "cgpa",
+          0.1747
+        ],
+        [
+          "internship_count",
+          0.0497
+        ],
+        [
+          "project_count",
+          0.0954
+        ],
+        [
+          "certification_count",
+          0.004
+        ],
+        [
+          "skill_count",
+          0.1384
+        ],
+        [
+          "placement_probability",
+          1.6049
+        ],
+        [
+          "branch_0",
+          -0.261
+        ],
+        [
+          "branch_1",
+          -0.1875
+        ],
+        [
+          "branch_2",
+          0.009
+        ],
+        [
+          "branch_3",
+          0.2212
+        ],
+        [
+          "branch_4",
+          0.4933
+        ],
+        [
+          "branch_5",
+          0.5129
+        ]
+      ],
+      "runtimeMs": 160
+    }
+  }
+}

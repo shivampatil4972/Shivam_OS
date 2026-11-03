@@ -1,0 +1,349 @@
+{
+  "generatedAt": "2026-11-02T16:42:47.563Z",
+  "commit": null,
+  "environment": {
+    "node": "v24.20.0",
+    "platform": "win32 x64",
+    "browser": "chrome 156.0.8078.79"
+  },
+  "checks": [
+    {
+      "metrics": [],
+      "details": [],
+      "id": "typecheck",
+      "title": "TypeScript (strict)",
+      "category": "code",
+      "command": "npx tsc --noEmit",
+      "ranAt": "2026-11-02T16:39:30.112Z",
+      "durationMs": 2373,
+      "status": "passed",
+      "summary": "No type errors in strict mode."
+    },
+    {
+      "metrics": [
+        {
+          "label": "Files linted",
+          "value": "115"
+        }
+      ],
+      "details": [],
+      "id": "lint",
+      "title": "ESLint (Next.js, React hooks, accessibility, TypeScript rules)",
+      "category": "code",
+      "command": "npx eslint .",
+      "ranAt": "2026-11-02T16:39:32.486Z",
+      "durationMs": 7443,
+      "status": "passed",
+      "summary": "0 errors, 0 warnings across 115 files."
+    },
+    {
+      "metrics": [
+        {
+          "label": "Passed",
+          "value": "182"
+        },
+        {
+          "label": "Failed",
+          "value": "0"
+        },
+        {
+          "label": "Files",
+          "value": "8"
+        }
+      ],
+      "details": [
+        "tests\\unit\\contact.test.ts: 23 tests",
+        "tests\\unit\\content.test.ts: 40 tests",
+        "tests\\unit\\ml.test.ts: 22 tests",
+        "tests\\unit\\prefs.test.ts: 13 tests",
+        "tests\\unit\\routes-ui.test.tsx: 18 tests",
+        "tests\\unit\\search.test.ts: 18 tests",
+        "tests\\unit\\terminal.test.ts: 30 tests",
+        "tests\\unit\\windows.test.ts: 18 tests"
+      ],
+      "id": "unit",
+      "title": "Unit tests (Vitest)",
+      "category": "tests",
+      "command": "npx vitest run",
+      "ranAt": "2026-11-02T16:39:39.929Z",
+      "durationMs": 4648,
+      "status": "passed",
+      "summary": "182 of 182 tests passed in 46 suites."
+    },
+    {
+      "metrics": [
+        {
+          "label": "Static pages",
+          "value": "39"
+        }
+      ],
+      "details": [],
+      "id": "build",
+      "title": "Production build (next build)",
+      "category": "code",
+      "command": "npx next build",
+      "ranAt": "2026-11-02T16:39:44.579Z",
+      "durationMs": 6136,
+      "status": "passed",
+      "summary": "Built successfully; 39 pages prerendered as static HTML."
+    },
+    {
+      "metrics": [
+        {
+          "label": "desktop tests run",
+          "value": "112"
+        },
+        {
+          "label": "mobile tests run",
+          "value": "103"
+        }
+      ],
+      "details": [],
+      "id": "e2e",
+      "title": "End-to-end tests (Playwright, desktop 1440×900 and Pixel 7)",
+      "category": "tests",
+      "command": "npx playwright test",
+      "ranAt": "2026-11-02T16:39:51.817Z",
+      "durationMs": 124417,
+      "status": "passed",
+      "summary": "215 passed, 0 failed, 0 flaky (61 skipped because they apply to the other viewport)."
+    },
+    {
+      "metrics": [
+        {
+          "label": "critical",
+          "value": "0"
+        },
+        {
+          "label": "serious",
+          "value": "0"
+        },
+        {
+          "label": "moderate",
+          "value": "0"
+        },
+        {
+          "label": "minor",
+          "value": "0"
+        }
+      ],
+      "details": [
+        "Automated rules catch only part of WCAG; keyboard, focus and reduced-motion behaviour is covered by the E2E suite, screen-reader testing is listed separately."
+      ],
+      "id": "a11y",
+      "title": "Accessibility (axe-core, WCAG 2.2 A/AA rules)",
+      "category": "accessibility",
+      "command": "npx playwright test tests/e2e/mobile-a11y.spec.ts",
+      "ranAt": "2026-11-02T16:39:51.817Z",
+      "durationMs": null,
+      "status": "passed",
+      "summary": "68 scans of 17 routes (light and dark, desktop and mobile): no violations found."
+    },
+    {
+      "metrics": [
+        {
+          "label": "desktop /",
+          "value": "LCP 1.12 s · CLS 0 · TBT 0 ms · JS 266 KB"
+        },
+        {
+          "label": "desktop /projects/journex",
+          "value": "LCP 0.27 s · CLS 0 · TBT 0 ms · JS 277 KB"
+        },
+        {
+          "label": "desktop /ai-lab",
+          "value": "LCP 0.25 s · CLS 0 · TBT 0 ms · JS 349 KB"
+        },
+        {
+          "label": "mobile /",
+          "value": "LCP 0.89 s · CLS 0 · TBT 216 ms · JS 266 KB"
+        },
+        {
+          "label": "mobile /projects/journex",
+          "value": "LCP 1.24 s · CLS 0 · TBT 214 ms · JS 277 KB"
+        },
+        {
+          "label": "mobile /ai-lab",
+          "value": "LCP 1.05 s · CLS 0 · TBT 145 ms · JS 349 KB"
+        }
+      ],
+      "details": [
+        "Lab measurement with Playwright + Chrome DevTools Protocol on the build machine; mobile = Pixel 7 emulation, 4× CPU slowdown, ~slow 4G network, cache disabled.",
+        "Browser: chrome 156.0.8078.79",
+        "These are lab numbers from one machine, not field data from real visitors."
+      ],
+      "id": "performance",
+      "title": "Performance (lab: LCP, CLS, blocking time, bytes)",
+      "category": "performance",
+      "command": "node scripts/perf-probe.mjs",
+      "ranAt": "2026-11-02T16:41:56.246Z",
+      "durationMs": 27057,
+      "status": "warning",
+      "summary": "2 of 6 measurements exceed a target (LCP 2.5 s, CLS 0.1, blocking time 200 ms)."
+    },
+    {
+      "metrics": [
+        {
+          "label": "External",
+          "value": "43"
+        },
+        {
+          "label": "Internal",
+          "value": "50"
+        }
+      ],
+      "details": [
+        "Unverifiable (HTTP 403) https://leetcode.com/u/shivam_patil_07",
+        "Unverifiable (HTTP 999) https://www.linkedin.com/in/shivam-patil-b47189210"
+      ],
+      "id": "links",
+      "title": "Broken links (content, repositories, pages and assets)",
+      "category": "links",
+      "command": "node scripts/check-links.mjs",
+      "ranAt": "2026-11-02T16:42:23.303Z",
+      "durationMs": 11910,
+      "status": "warning",
+      "summary": "91 of 93 links responded successfully; 0 broken; 2 could not be verified because the site blocks automated requests."
+    },
+    {
+      "metrics": [
+        {
+          "label": "Production advisories",
+          "value": "0"
+        },
+        {
+          "label": "Dev-only advisories",
+          "value": "16"
+        },
+        {
+          "label": "High/critical (all)",
+          "value": "0"
+        }
+      ],
+      "details": [
+        "minimatch (moderate): minimatch has potential denial of service via globparts amplification",
+        "Dev-only advisories affect tools that run on developer and CI machines (ESLint), not code shipped to visitors."
+      ],
+      "id": "dependencies",
+      "title": "Dependency audit (npm audit)",
+      "category": "dependencies",
+      "command": "npm audit --omit=dev && npm audit",
+      "ranAt": "2026-11-02T16:42:35.484Z",
+      "durationMs": 12053,
+      "status": "warning",
+      "summary": "Production dependencies: no known vulnerabilities. Development tooling: 16 advisories (16 moderate, 0 high, 0 critical across all packages)."
+    },
+    {
+      "metrics": [
+        {
+          "label": "Open placeholders",
+          "value": "47"
+        }
+      ],
+      "details": [
+        "src\\content\\education.ts: Confirm the affiliating university (e.g. Shivaji University, Kolhapur) as it should appear.",
+        "src\\content\\education.ts: List relevant courses from your transcript (e.g. Machine Learning, Statistics, Big Data).",
+        "src\\content\\education.ts: Add the year",
+        "src\\content\\education.ts: Add what Abhiyanta Karandak is and the category.",
+        "src\\content\\education.ts: Add the year",
+        "src\\content\\education.ts: Add the event or category.",
+        "src\\content\\education.ts: Result / ranking",
+        "src\\content\\education.ts: Result / ranking",
+        "src\\content\\experience.ts: Describe a specific feature you shipped and its effect (only what you can share publicly).",
+        "src\\content\\experience.ts: Add a verifiable outcome, if any.",
+        "src\\content\\experience.ts: What did working in a company codebase teach you?",
+        "src\\content\\experience.ts: Location / mode",
+        "src\\content\\experience.ts: Describe projects or modules completed during the internship.",
+        "src\\content\\experience.ts: Add the start date",
+        "src\\content\\experience.ts: Add the end date",
+        "src\\content\\experience.ts: Add the start date",
+        "src\\content\\experience.ts: Add the end date",
+        "src\\content\\profile.ts: Confirm which roles and start dates you are open to (e.g. internships, 2027 graduate roles).",
+        "src\\content\\profile.ts: Confirm your learning goals. Suggested from your recent work: distributed systems and observability; evaluating LLM features on real, consented data; deeper Java/Spring Boot system design.",
+        "src\\content\\profile.ts: Add personal interests outside engineering (hobbies, sports, music…).",
+        "src\\content\\projects\\intelligrade.ts: Confirm whether this is a solo or team project.",
+        "src\\content\\projects\\intelligrade.ts: add the repository link once it is pushed to GitHub.",
+        "src\\content\\projects\\journex.ts: Describe your personal responsibilities within the team of four (which services, experiments and documents you owned).",
+        "src\\content\\projects\\journex.ts: List the components you personally designed or implemented.",
+        "src\\content\\projects\\journex.ts: List the experiments or analyses you ran.",
+        "src\\content\\projects\\more.ts: Add the hackathon result or ranking if known.",
+        "src\\content\\projects\\more.ts: Solo or team entry?",
+        "src\\content\\projects\\more.ts: Add the hackathon's evaluation score if it was published to you.",
+        "src\\content\\projects\\more.ts: Add the challenge result if known.",
+        "src\\content\\projects\\more.ts: Solo or team entry?",
+        "src\\content\\projects\\more.ts: Solo or team project?",
+        "src\\content\\projects\\more.ts: Solo or team project?",
+        "src\\content\\projects\\more.ts: Solo or team project?",
+        "src\\content\\projects\\more.ts: Describe the data-cleaning problems you solved.",
+        "src\\content\\projects\\more.ts: Describe how totals were verified",
+        "src\\content\\projects\\more.ts: Solo or team project?",
+        "src\\content\\projects\\more.ts: Solo or team project?",
+        "src\\content\\projects\\more.ts: Describe how console writes and server threads share the SQLite database safely.",
+        "src\\content\\projects\\more.ts: Clarify the pbiexperts organisation's role (client, team or employer).",
+        "src\\content\\projects\\more.ts: Confirm client engagement details and whether the client may be named.",
+        "src\\content\\projects\\more.ts: Summarise the LMS test suites and their latest results.",
+        "src\\content\\projects\\more.ts: Solo or team project?",
+        "src\\content\\projects\\more.ts: Describe how you cleaned and combined the PhonePe Pulse files.",
+        "src\\content\\projects\\more.ts: Describe the main challenge you hit with a 660,679-row dataset.",
+        "src\\content\\research.ts: Add the related work on ride-sharing cancellations and overbooking that the team reviewed.",
+        "src\\content\\research.ts: State your own contribution to the research (model, simulator, experiments, analysis or writing).",
+        "src\\content\\research.ts: Add any OCR evaluation references you consulted."
+      ],
+      "id": "content",
+      "title": "Content integrity (open placeholders)",
+      "category": "content",
+      "command": "scan of src/content for placeholder()",
+      "ranAt": "2026-11-02T16:42:47.540Z",
+      "durationMs": null,
+      "status": "warning",
+      "summary": "47 details are marked as editable placeholders for the owner to confirm; none is presented as fact."
+    },
+    {
+      "metrics": [],
+      "details": [],
+      "id": "screen-reader",
+      "title": "Manual screen-reader testing (NVDA, VoiceOver)",
+      "category": "accessibility",
+      "command": "manual",
+      "ranAt": null,
+      "durationMs": null,
+      "status": "not-run",
+      "summary": "Not performed. Automated axe scans and keyboard tests do not replace testing with assistive technology."
+    },
+    {
+      "metrics": [],
+      "details": [],
+      "id": "real-devices",
+      "title": "Real-device testing (iOS Safari, Android Chrome)",
+      "category": "tests",
+      "command": "manual",
+      "ranAt": null,
+      "durationMs": null,
+      "status": "not-run",
+      "summary": "Not performed. Mobile behaviour is tested in Chrome's Pixel 7 emulation only; WebKit/Safari has not been tested."
+    },
+    {
+      "metrics": [],
+      "details": [],
+      "id": "contact-delivery",
+      "title": "Contact form delivery through a live provider",
+      "category": "tests",
+      "command": "—",
+      "ranAt": null,
+      "durationMs": null,
+      "status": "unavailable",
+      "summary": "No mail provider is configured for this build, so real delivery has not been exercised. The form says so instead of claiming success; the delivery code is unit-tested against a stubbed provider."
+    },
+    {
+      "metrics": [],
+      "details": [],
+      "id": "ci",
+      "title": "Continuous integration on GitHub Actions",
+      "category": "tests",
+      "command": ".github/workflows/ci.yml",
+      "ranAt": null,
+      "durationMs": null,
+      "status": "unavailable",
+      "summary": "A workflow is included, but it has not run: the repository has not been pushed to GitHub yet."
+    }
+  ]
+}
