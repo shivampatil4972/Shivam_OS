@@ -25,6 +25,7 @@ function Loading() {
 const APP_COMPONENTS: Record<AppId, ComponentType<AppProps>> = {
   home: dynamic(() => import("@/apps/home/HomeApp"), { loading: Loading }),
   projects: dynamic(() => import("@/apps/projects/ProjectsApp"), { loading: Loading }),
+  ask: dynamic(() => import("@/apps/ask/AskApp"), { loading: Loading }),
   about: dynamic(() => import("@/apps/about/AboutApp"), { loading: Loading }),
   skills: dynamic(() => import("@/apps/skills/SkillsApp"), { loading: Loading }),
   education: dynamic(() => import("@/apps/education/EducationApp"), { loading: Loading }),

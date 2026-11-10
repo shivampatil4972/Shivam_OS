@@ -64,7 +64,7 @@
     <g font-family="'Segoe UI Variable Text','SF Pro Text',-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif" font-size="17" font-weight="600" fill="#dfe8ff">
       <g transform="translate(256 252)">
         <rect width="168" height="38" rx="19" fill="#ffffff" fill-opacity="0.07" stroke="url(#edge)"/>
-        <text x="84" y="25" text-anchor="middle">16 apps</text>
+        <text x="84" y="25" text-anchor="middle">17 apps</text>
       </g>
       <g transform="translate(436 252)">
         <rect width="200" height="38" rx="19" fill="#ffffff" fill-opacity="0.07" stroke="url(#edge)"/>

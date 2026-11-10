@@ -4,7 +4,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { expectNoHorizontalOverflow, onlyMobile, skipBoot, windowEl } from "./helpers";
 
-const ROUTES = ["/", "/projects", "/projects/journex", "/about", "/skills", "/education", "/experience", "/research", "/ai-lab", "/xray", "/github", "/terminal", "/resume", "/contact", "/settings", "/quality", "/recruiter"];
+const ROUTES = ["/", "/projects", "/projects/journex", "/ask", "/about", "/skills", "/education", "/experience", "/research", "/ai-lab", "/xray", "/github", "/terminal", "/resume", "/contact", "/settings", "/quality", "/recruiter"];
 
 test.describe("mobile experience", () => {
   test.beforeEach(async ({ page }, info) => {
@@ -16,7 +16,7 @@ test.describe("mobile experience", () => {
     await page.goto("/");
     await expect(page.getByRole("region", { name: "Home screen" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Shivam Patil", exact: true })).toBeVisible();
-    await expect(page.getByRole("list", { name: "Apps" }).getByRole("button")).toHaveCount(15);
+    await expect(page.getByRole("list", { name: "Apps" }).getByRole("button")).toHaveCount(16);
     await expect(page.getByRole("toolbar", { name: "Applications" })).toBeHidden();
     await expect(page.locator('[data-window][data-app="home"]')).toBeHidden();
   });

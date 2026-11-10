@@ -11,6 +11,8 @@ import { useOS } from "./OSContext";
 import { publishActivity } from "./state/activity";
 import { useModalDialog } from "./useDialog";
 
+const ASK_ENTRY_ID = "ask-question";
+
 export default function SpotlightDialog() {
   const os = useOS();
   const [query, setQuery] = useState("");
@@ -25,8 +27,19 @@ export default function SpotlightDialog() {
 
   const index = useMemo(() => buildSearchIndex(), []);
   const results: OSSearchEntry[] = useMemo(() => {
-    if (!deferred.trim()) return SUGGESTED_IDS.map((id) => index.find((e) => e.id === id)).filter((e): e is OSSearchEntry => Boolean(e));
-    return search(index, deferred, 40);
+    const q = deferred.trim();
+    if (!q) return SUGGESTED_IDS.map((id) => index.find((e) => e.id === id)).filter((e): e is OSSearchEntry => Boolean(e));
+    const found = search(index, deferred, 40);
+    // A question (several words) can also go to Ask SHIVAM.OS.
+    if (q.length < 8 || !q.includes(" ")) return found;
+    const askEntry: OSSearchEntry = {
+      id: ASK_ENTRY_ID,
+      group: "Ask SHIVAM.OS",
+      title: `Ask: “${q.slice(0, 120)}”`,
+      subtitle: "Get an answer that cites this portfolio",
+      action: { kind: "open", app: "ask", params: { q: q.slice(0, 400) } },
+    };
+    return q.endsWith("?") ? [askEntry, ...found] : [...found, askEntry];
   }, [deferred, index]);
 
   useEffect(() => {
@@ -40,7 +53,9 @@ export default function SpotlightDialog() {
       publishActivity({ kind: "search", title: `“${query.trim()}”`, detail: `${results.length} result${results.length === 1 ? "" : "s"}` });
     }
     close();
-    runSearchAction(os, entry.action);
+    // A fresh token lets the same question be asked again from Spotlight.
+    const action = entry.id === ASK_ENTRY_ID && entry.action.kind === "open" ? { ...entry.action, params: { ...entry.action.params, t: String(Date.now()) } } : entry.action;
+    runSearchAction(os, action);
   };
 
   const groups: Array<{ name: string; items: Array<{ entry: OSSearchEntry; index: number }> }> = [];

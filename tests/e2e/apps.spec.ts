@@ -453,3 +453,69 @@ test.describe("Dock", () => {
     await expect(windowEl(page, "home")).toBeVisible();
   });
 });
+
+test.describe("Ask SHIVAM.OS", () => {
+  const answer = {
+    ok: true,
+    model: "gemini-3.6-flash",
+    truncated: false,
+    segments: [
+      { text: "Shivam is part of a four-person team building JOURNEX", sources: [1] },
+      { text: ", a ride-sharing platform with a simulation study.", sources: [] },
+    ],
+    sources: [{ n: 1, title: "JOURNEX (VAYORA) — overview", href: "/projects/journex", quotes: ["Team of 4."] }],
+  };
+
+  /** The test server has no API key; these routes stand in for a configured deployment. */
+  async function mockConfigured(page: import("@playwright/test").Page, posts: unknown[] = []) {
+    await page.route("**/api/ask", async (route) => {
+      if (route.request().method() === "GET") return route.fulfill({ json: { configured: true, model: "gemini-3.6-flash", freeTier: true } });
+      posts.push(route.request().postDataJSON());
+      return route.fulfill({ json: answer });
+    });
+  }
+
+  test("says honestly that it is off when no API key is configured", async ({ page }) => {
+    await page.goto("/ask");
+    await ready(page);
+    await expect(page.getByText("isn't switched on for this deployment")).toBeVisible();
+    await expect(page.getByRole("textbox", { name: "Your question" })).toBeDisabled();
+    await expect(windowEl(page, "ask").getByRole("button", { name: "Recruiter Mode" })).toBeVisible();
+  });
+
+  test("shows a cited answer whose sources open inside the OS", async ({ page }) => {
+    const posts: unknown[] = [];
+    await mockConfigured(page, posts);
+    await page.goto("/ask");
+    await ready(page);
+    await expect(page.getByText("Answers by Gemini · gemini-3.6-flash")).toBeVisible();
+    await expect(page.getByText(/uses Gemini's free tier, so Google may use questions/)).toBeVisible();
+    const box = page.getByRole("textbox", { name: "Your question" });
+    await box.fill("What did Shivam build in JOURNEX?");
+    await box.press("Enter");
+    const article = page.getByRole("article", { name: /Answer to: What did Shivam build in JOURNEX\?/ });
+    // The citation marker "1" follows the cited words.
+    await expect(article).toContainText("four-person team building JOURNEX1, a ride-sharing platform");
+    await expect(article.getByRole("heading", { name: "Sources" })).toBeVisible();
+    await expect(article.getByText("Team of 4.")).toBeVisible();
+    expect(posts).toEqual([{ question: "What did Shivam build in JOURNEX?", history: [] }]);
+    await article.getByRole("link", { name: "Source 1: JOURNEX (VAYORA) — overview" }).click();
+    await expect(page).toHaveURL(/\/projects\/journex$/);
+  });
+
+  test("Spotlight hands a question to Ask SHIVAM.OS", async ({ page }, info) => {
+    onlyDesktop(info);
+    const posts: unknown[] = [];
+    await mockConfigured(page, posts);
+    await page.goto("/");
+    await ready(page);
+    await page.keyboard.press("Control+KeyK");
+    const dialog = page.getByRole("dialog", { name: "Spotlight search" });
+    await dialog.getByRole("combobox").fill("Which projects use Spring Boot?");
+    await expect(dialog.getByRole("option").first()).toContainText("Ask: “Which projects use Spring Boot?”");
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(/\/ask$/);
+    await expect(windowEl(page, "ask").getByRole("article")).toContainText("ride-sharing platform");
+    expect(posts).toEqual([{ question: "Which projects use Spring Boot?", history: [] }]);
+  });
+});

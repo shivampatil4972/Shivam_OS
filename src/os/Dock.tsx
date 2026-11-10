@@ -32,7 +32,7 @@ export function Dock() {
       }),
   );
 
-  const items: Array<AppId | "spotlight" | "sep"> = [...DOCK_APPS.slice(0, 13), "sep", ...DOCK_APPS.slice(13), "spotlight"];
+  const items: Array<AppId | "spotlight" | "sep"> = [...DOCK_APPS.slice(0, 14), "sep", ...DOCK_APPS.slice(14), "spotlight"];
   const focusable = items.filter((i) => i !== "sep");
   // Shrink to fit narrow desktops so the dock never overflows the screen.
   const fit = Math.floor((viewportW - 120) / focusable.length) - 6;

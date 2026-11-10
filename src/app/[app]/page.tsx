@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { ComponentType } from "react";
 import AboutApp from "@/apps/about/AboutApp";
 import AILabApp from "@/apps/ai-lab/AILabApp";
+import AskApp from "@/apps/ask/AskApp";
 import ContactApp from "@/apps/contact/ContactApp";
 import EducationApp from "@/apps/education/EducationApp";
 import ExperienceApp from "@/apps/experience/ExperienceApp";
@@ -21,6 +22,7 @@ import type { AppProps } from "@/os/WindowLayer";
 
 /** Each route server-renders the app it opens; the browser loads only that app's code. */
 const ROUTE_APPS: Record<Exclude<AppId, "home" | "projects">, ComponentType<AppProps>> = {
+  ask: AskApp,
   about: AboutApp,
   skills: SkillsApp,
   education: EducationApp,

@@ -13,6 +13,7 @@ type Palette = { top: string; bottom: string; angle?: "vertical" | "diagonal" };
 const TILES: Record<AppId, Palette> = {
   home: { top: "#4f93ff", bottom: "#1745c4" },
   projects: { top: "#ffc659", bottom: "#ee6a1a" },
+  ask: { top: "#ff9f72", bottom: "#6b3df2", angle: "diagonal" },
   about: { top: "#43e3c8", bottom: "#0c8574" },
   skills: { top: "#b8a1ff", bottom: "#5f31dc" },
   education: { top: "#7482ff", bottom: "#272c97" },
@@ -108,6 +109,8 @@ function gearPath(cx: number, cy: number, outer: number, inner: number, teeth: n
 }
 
 const GEAR = gearPath(32, 32, 19.5, 15.2, 9);
+/** Speech bubble with a tail at the lower left (Ask SHIVAM.OS). */
+const BUBBLE = "M17 16h30a5.5 5.5 0 0 1 5.5 5.5v16A5.5 5.5 0 0 1 47 43H28.5l-8.6 7.2a1.1 1.1 0 0 1-1.8-.85V43H17a5.5 5.5 0 0 1-5.5-5.5v-16A5.5 5.5 0 0 1 17 16Z";
 
 function Glyph({ id, r }: { id: AppId | "spotlight"; r: Ref }) {
   const C = `url(#${r("ceramic")})`;
@@ -138,6 +141,25 @@ function Glyph({ id, r }: { id: AppId | "spotlight"; r: Ref }) {
           <path d="M11 29a3 3 0 0 1 3-3h36a3 3 0 0 1 3 3l-2 17a3 3 0 0 1-3 2.7H16a3 3 0 0 1-3-2.7Z" fill={C} />
           <path d="M14 27.2h36" stroke="#fff" strokeWidth="1.2" strokeLinecap="round" />
           <rect x="27" y="33" width="10" height="3" rx="1.5" fill="#ee6a1a" opacity="0.75" />
+        </>
+      );
+    case "ask":
+      return (
+        <>
+          <linearGradient id={r("spark")} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#ff9f72" />
+            <stop offset="1" stopColor="#6b3df2" />
+          </linearGradient>
+          <Extrude r={r}>
+            <path d={BUBBLE} />
+          </Extrude>
+          <path d={BUBBLE} fill={C} />
+          <path d="M17.5 17.9h29" stroke="#fff" strokeWidth="1.1" strokeLinecap="round" />
+          <path d="M24.5 22.5c.9 4.7 2.7 6.5 7.4 7.4-4.7.9-6.5 2.7-7.4 7.4-.9-4.7-2.7-6.5-7.4-7.4 4.7-.9 6.5-2.7 7.4-7.4Z" fill={`url(#${r("spark")})`} />
+          <path d="M23.4 25.6c.3 1.6.9 2.4 2.2 2.9" stroke="#fff" strokeOpacity="0.7" strokeWidth="0.9" strokeLinecap="round" fill="none" />
+          <path d="M35.5 20.5c.4 2 1.1 2.7 3.1 3.1-2 .4-2.7 1.1-3.1 3.1-.4-2-1.1-2.7-3.1-3.1 2-.4 2.7-1.1 3.1-3.1Z" fill="#ff9f72" />
+          <rect x="35" y="30" width="12" height="2.4" rx="1.2" fill="#7a879c" />
+          <rect x="35" y="34.6" width="8" height="2.2" rx="1.1" fill="#a6b1c2" />
         </>
       );
     case "about":

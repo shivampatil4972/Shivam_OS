@@ -344,7 +344,8 @@ a {
     inset: var(--menubar-h) 0 0 0;
     transform: none !important;
     width: 100% !important;
-    height: 100% !important;
+    /* Height comes from the insets: below the menu bar, down to the bottom edge. */
+    height: auto !important;
     border-radius: 0 !important;
   }
   [data-window][data-focused="false"],

@@ -2,8 +2,12 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { profile } from "@/content/profile";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import { SiteAnalytics } from "@/os/SiteAnalytics";
 import { PREFS_BOOT_SCRIPT } from "@/os/state/prefsCore";
 import "./globals.css";
+
+/** Page-view analytics run only on the production Vercel deployment (set by Vercel at build time). */
+const ANALYTICS = process.env.VERCEL_ENV === "production";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -58,6 +62,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         {children}
+        {ANALYTICS && <SiteAnalytics />}
         <noscript>
           <div style={{ position: "fixed", inset: "auto 0 0 0", zIndex: 100, padding: 16, background: "#0d1322", color: "#eef2f9", fontSize: 14 }}>
             SHIVAM.OS works best with JavaScript. Without it you can still read{" "}

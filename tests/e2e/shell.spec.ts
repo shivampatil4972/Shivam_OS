@@ -179,7 +179,7 @@ test.describe("window manager", () => {
     expect(Math.round((await geometry(win)).x)).toBe(8);
     await page.keyboard.press("Alt+Shift+KeyM");
     await expect(win).toHaveAttribute("data-minimized", "true");
-    await page.keyboard.press("Alt+Shift+Digit3");
+    await page.keyboard.press("Alt+Shift+Digit4");
     await expect(win).toHaveAttribute("data-minimized", "false");
     await page.keyboard.press("Alt+Shift+KeyW");
     await expect(win).toHaveCount(0);

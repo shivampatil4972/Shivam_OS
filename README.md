@@ -24,7 +24,7 @@ Case studies, architecture X-rays, research and a live ML experiment — each cl
 
 <br /><br />
 
-<img src="docs/readme/dock.webp" alt="The dock: sixteen original dimensional app icons" width="88%" />
+<img src="docs/readme/dock.webp" alt="The dock: seventeen original dimensional app icons" width="88%" />
 
 </div>
 
@@ -34,7 +34,7 @@ Case studies, architecture X-rays, research and a live ML experiment — each cl
 
 ## ✦ What is this?
 
-SHIVAM.OS presents the work of **Shivam Patil** — final-year B.Tech CSE (Data Science) at D. Y. Patil College of Engineering & Technology, Kolhapur — as a small operating system. Open apps from the dock, drag windows around, search everything with <kbd>Ctrl</kbd>/<kbd>⌘</kbd> <kbd>K</kbd>, or switch to **Recruiter Mode** for a one-page summary tailored to a role.
+SHIVAM.OS presents the work of **Shivam Patil** — final-year B.Tech CSE (Data Science) at D. Y. Patil College of Engineering & Technology, Kolhapur — as a small operating system. Open apps from the dock, drag windows around, search everything with <kbd>Ctrl</kbd>/<kbd>⌘</kbd> <kbd>K</kbd>, ask questions in **Ask SHIVAM.OS** and get answers that cite the portfolio, or switch to **Recruiter Mode** for a one-page summary tailored to a role.
 
 It is built to be **verifiable**, not just pretty: results carry their sources, simulated or unbuilt parts are labelled as such, unknown details are shown as placeholders, and the site publishes its own dated test report.
 
@@ -117,6 +117,7 @@ Every case study has problem, contribution, trade-offs, tests, measured results,
 |:--:|---|---|
 | 🏠 | **Home** | Introduction, flagship project, key numbers, résumé and contact shortcuts |
 | 🗂️ | **Projects** | Search, category / status / technology filters, sorting, 14 full case studies |
+| 💬 | **Ask SHIVAM.OS** | Answers questions with Gemini, only from the portfolio's own content, and cites the passage behind each claim |
 | 👤 | **About** | Engineering journey, interests, problem-solving philosophy, leadership |
 | 🧩 | **Skills** | Skills by evidence level and the Proof-of-Work graph with a matrix view |
 | 🎓 | **Education** | Degree, CGPA, certifications, a registered design, awards, hackathons |
@@ -147,11 +148,14 @@ flowchart LR
   C[("src/content<br/>typed data")]
   T["Zod schemas<br/>(tests + CI only)"]
   A["/api/contact<br/>validation · rate limit · provider"]
+  Q["/api/ask<br/>BM25 retrieval · Gemini · cited JSON"]
   P --> S --> W
   S --> O
   W --> C
   T -. validates .-> C
   W -- contact form --> A
+  W -- questions --> Q
+  Q -. retrieves .-> C
 ```
 
 - **Static first.** Every page is prerendered; each route server-renders the app it opens, so content is in the HTML before JavaScript loads.
@@ -172,7 +176,9 @@ flowchart LR
 | Styling | Tailwind CSS 4, CSS custom properties for themes, glass and accents |
 | Motion | Motion for React (`LazyMotion` + DOM features only) |
 | Forms & validation | React Hook Form, Zod |
-| Icons | 17 original SVG app icons; Lucide for UI glyphs |
+| AI | Google Gemini API (`@google/genai`) with schema-checked JSON answers that cite passage ids; server-only |
+| Analytics | Vercel Web Analytics: cookieless page views, production deployment only |
+| Icons | 18 original SVG app icons; Lucide for UI glyphs |
 | Testing | Vitest + Testing Library, Playwright (desktop + Pixel 7), axe-core |
 | Hosting | Vercel (any Node 20.9+ host works) |
 
@@ -184,7 +190,7 @@ TypeScript 6 is used rather than 7 because Next.js's build type-check and typesc
 
 ```
 src/
-  app/            routes, metadata (sitemap, robots, manifest, OG image), contact API
+  app/            routes, metadata (sitemap, robots, manifest, OG image), contact and ask APIs
   os/             shell: window manager, dock, menu bar, Spotlight, overlays, routing
   os/state/       pure reducers and stores (windows, preferences, activity)
   apps/<app>/     one folder per app, code-split and loaded on demand
@@ -200,20 +206,20 @@ docs/             deployment and content guides, README assets
 
 ## ✦ Quality
 
-Measured by `npm run qc` on **2 November 2026** (Node 24, Windows, Chrome 156). The full report ships with the site and appears in the **Quality Control** app.
+Measured by `npm run qc` on **10 November 2026** (Node 24, Windows, Chrome 157). The full report ships with the site and appears in the **Quality Control** app.
 
 | Check | Result |
 |---|---|
 | TypeScript strict | ✅ 0 errors |
 | ESLint | ✅ 0 errors, 0 warnings, no suppressions |
-| Unit tests | ✅ 182 / 182 |
-| End-to-end (desktop + mobile) | ✅ 215 / 215, 0 flaky |
-| Accessibility (axe-core, WCAG 2.2 A/AA) | ✅ 0 violations in 68 scans — 17 routes, light & dark, desktop & mobile |
-| Performance (lab, throttled mobile) | ⚠️ LCP 0.25–1.24 s, CLS 0; blocking time 145–216 ms (two pages just over 200 ms) |
+| Unit tests | ✅ 231 / 231 |
+| End-to-end (desktop + mobile) | ✅ 225 / 225, 0 flaky |
+| Accessibility (axe-core, WCAG 2.2 A/AA) | ✅ 0 violations in 72 scans — 18 routes, light & dark, desktop & mobile |
+| Performance (lab, throttled mobile) | ✅ LCP 0.17–1.15 s, CLS 0, blocking time 0–115 ms (lab numbers vary between runs) |
 | Links | ⚠️ 0 broken of 93; LinkedIn and LeetCode block automated checks |
-| Dependencies | ⚠️ 0 production advisories; 16 moderate in dev-only ESLint tooling |
-| CI (GitHub Actions, Ubuntu) | ✅ First run passed: install, typecheck, lint, unit, build, Playwright |
-| Not run | Screen readers, real iOS/Android devices, live contact delivery |
+| Dependencies | ⚠️ 0 production advisories; 7 moderate in dev-only ESLint tooling |
+| CI (GitHub Actions, Ubuntu) | ✅ Latest run passed (0ee52a9): install, typecheck, lint, unit, build, Playwright |
+| Not run | Screen readers, real iOS/Android devices, live contact delivery, live Ask SHIVAM.OS answers (no API key here; tested against a mocked API), live analytics |
 
 The AI Lab's TypeScript model agrees with scikit-learn on identical rows: **ROC-AUC 0.8607** in both; accuracy 0.8400 vs 0.8385.
 
@@ -224,6 +230,7 @@ The AI Lab's TypeScript model agrees with scikit-learn on identical rows: **ROC-
 - The Placement Portal's reported 95.11% accuracy is shown next to the **majority baseline it does not beat**.
 - Commits co-authored with an **AI coding assistant are disclosed** per project.
 - The registered design is called a **design registration, not a patent**.
+- **Ask SHIVAM.OS** answers only from the site's verified content, shows the passage behind each claim, and says when something isn't covered. Without an API key it says it is switched off.
 - Private repositories are not linked, and the phone number is not shown on the site.
 
 ## ✦ Run it locally
@@ -275,6 +282,8 @@ Deployment, environment variables and custom domains: **[docs/DEPLOYMENT.md](doc
 <br />
 
 - **Contact delivery** needs a Formspree or Resend account; until then the form says nothing was sent.
+- **Ask SHIVAM.OS** needs a Gemini API key. On Gemini's free tier, Google may use questions to improve its products (visitors are told). Its rate limits are in memory, so they apply per instance on serverless hosts. Live answers are not tested here: the UI is tested against a mocked API.
+- **Visit statistics** need Web Analytics enabled in the Vercel project, and count the production deployment only.
 - **Not tested** on real iOS/Android devices, in Safari/WebKit or Firefox, or with screen readers.
 - **Performance numbers** are lab measurements on one machine, not field data.
 - **CSP** allows inline scripts, which statically prerendered Next.js pages need without per-request nonces.

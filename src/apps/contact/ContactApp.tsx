@@ -153,7 +153,10 @@ export default function ContactApp() {
         <details className="mt-4 text-[12.5px] text-muted">
           <summary className="cursor-pointer text-fg">Privacy notice</summary>
           <p className="mt-2 leading-relaxed">
-            The form collects only your name, email, subject and message, for the sole purpose of replying to you. This site does not store them: they are passed to the configured email provider (Formspree or Resend) for delivery. A simple per-IP rate limit is applied in memory and is not logged. No cookies, analytics or trackers are used by SHIVAM.OS.
+            The form collects only your name, email, subject and message, for the sole purpose of replying to you. This site does not store them: they are passed to the configured email provider (Formspree or Resend) for delivery. A simple per-IP rate limit is applied in memory and is not logged.
+          </p>
+          <p className="mt-2 leading-relaxed">
+            SHIVAM.OS sets no cookies and uses no advertising trackers. On the live site, Vercel Web Analytics counts page views without cookies: it records the page address, referrer, approximate location, browser, operating system and device type, and tells visits apart only by a hash of the request that is discarded after 24 hours. Questions typed into Ask SHIVAM.OS are sent to Google&apos;s Gemini API to write the answer and are not stored by this site; on Gemini&apos;s free tier, Google may use them to improve its products.
           </p>
         </details>
       </section>

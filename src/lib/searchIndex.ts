@@ -84,4 +84,4 @@ export function buildSearchIndex(): OSSearchEntry[] {
 }
 
 /** Shown before the visitor types anything. */
-export const SUGGESTED_IDS = ["project-journex", "app-recruiter", "act-resume", "app-ai-lab", "app-xray", "act-email"];
+export const SUGGESTED_IDS = ["project-journex", "app-recruiter", "app-ask", "act-resume", "app-ai-lab", "app-xray", "act-email"];

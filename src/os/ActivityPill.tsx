@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, Check, Copy, FlaskConical, Info, Loader2, Search, SquareArrowOutUpRight } from "lucide-react";
+import { AlertTriangle, Check, CheckCircle2, Copy, Info, Loader2, Search, SquareArrowOutUpRight } from "lucide-react";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { useActivity, type ActivityKind } from "./state/activity";
@@ -10,7 +10,7 @@ const ICONS: Record<ActivityKind, typeof Check> = {
   opened: SquareArrowOutUpRight,
   search: Search,
   running: Loader2,
-  completed: FlaskConical,
+  completed: CheckCircle2,
   copied: Copy,
   error: AlertTriangle,
   info: Info,
