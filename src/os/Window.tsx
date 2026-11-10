@@ -102,9 +102,11 @@ export function Window({ win, focused, children }: { win: WindowState; focused: 
           "glass glass-edge flex h-full w-full flex-col overflow-hidden rounded-[var(--radius-window)] shadow-[var(--shadow-window)] max-md:rounded-none max-md:border-0",
           !focused && "opacity-[0.97]",
         )}
-        initial={reduced || !animateIn ? false : { opacity: 0, scale: 0.96, y: 8 }}
-        animate={win.minimized ? { opacity: 0, scale: 0.9, y: 60 } : { opacity: 1, scale: 1, y: 0 }}
-        transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 34, mass: 0.8 }}
+        data-anim={animateIn && !reduced ? "in" : undefined}
+        style={{ transformOrigin: "50% 100%" }}
+        initial={reduced || !animateIn ? false : { opacity: 0, scale: 0.9, y: 36 }}
+        animate={win.minimized ? { opacity: 0, scale: 0.86, y: 80 } : { opacity: 1, scale: 1, y: 0 }}
+        transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 30, mass: 0.85 }}
       >
         {/* Desktop title bar */}
         <header

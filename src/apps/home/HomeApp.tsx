@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, BriefcaseBusiness, Download, Mail } from "lucide-react";
+import { ArrowRight, BriefcaseBusiness, Download, Mail, Sparkles, X } from "lucide-react";
 import { GitHubGlyph, LinkedInGlyph } from "@/design/icons/Brand";
 import Image from "next/image";
 import { profile } from "@/content/profile";
@@ -10,6 +10,7 @@ import { AppIcon } from "@/design/icons/AppIcon";
 import { Badge, Button, Chip, LinkButton, Stat } from "@/design/ui";
 import { APPS, type AppId } from "@/os/apps";
 import { useOS } from "@/os/OSContext";
+import { setPrefs } from "@/os/state/prefs";
 import { AppScroll, ProjectCover, ProjectStatus } from "../shared";
 
 const flagship = getProject("journex")!;
@@ -23,11 +24,12 @@ export default function HomeApp() {
 
   return (
     <AppScroll wide>
+      <QuickStart />
       <section aria-labelledby="home-hero" className="grid items-center gap-6 md:grid-cols-[auto_1fr]">
         <Image src={profile.photo.src} alt={profile.photo.alt} width={132} height={132} className="size-24 rounded-[28px] object-cover shadow-lg ring-1 ring-white/30 md:size-[132px]" priority />
         <div>
           <p className="text-[13px] font-medium text-accent-text">{profile.roles.join(" · ")}</p>
-          <h3 id="home-hero" className="mt-1 font-display text-[30px] leading-tight font-semibold text-fg md:text-[36px]">
+          <h3 id="home-hero" tabIndex={-1} className="text-gradient mt-1 w-fit font-display text-[32px] leading-tight font-semibold outline-none md:text-[40px]">
             {profile.name}
           </h3>
           <p className="mt-2 max-w-2xl text-[16px] leading-relaxed text-fg">{profile.headline}</p>
@@ -146,5 +148,58 @@ export default function HomeApp() {
         </ul>
       </section>
     </AppScroll>
+  );
+}
+
+const QUICK_START: Array<{ app: AppId | "spotlight"; title: string; hint: string }> = [
+  { app: "projects", title: "Browse projects", hint: "14 case studies, each with sources" },
+  { app: "ask", title: "Ask a question", hint: "Answers cite this portfolio" },
+  { app: "recruiter", title: "Recruiter summary", hint: "Pick the role you're hiring for" },
+  { app: "spotlight", title: "Search everything", hint: "Ctrl K (⌘ K on a Mac)" },
+];
+
+/** First-visit shortcuts. Hidden from Settings → Help, or with the close button; applied before paint, so no layout jump. */
+function QuickStart() {
+  const { open, store } = useOS();
+  return (
+    <section aria-labelledby="quick-start-title" className="quick-start card mb-7 p-4 md:p-5">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h4 id="quick-start-title" className="flex items-center gap-2 font-display text-[16px] font-semibold text-fg">
+            <Sparkles className="size-4 text-accent-text" aria-hidden /> Quick start
+          </h4>
+          <p className="mt-0.5 text-[13.5px] text-muted">Open apps from the dock and drag windows anywhere, or jump straight in:</p>
+        </div>
+        <button
+          type="button"
+          aria-label="Hide quick start"
+          title="Hide (bring it back in Settings → Help)"
+          onClick={() => {
+            setPrefs({ showTips: false });
+            document.getElementById("home-hero")?.focus();
+          }}
+          className="grid size-8 shrink-0 place-items-center rounded-full text-muted transition-colors hover:bg-hover hover:text-fg"
+        >
+          <X className="size-4" aria-hidden />
+        </button>
+      </div>
+      <ul className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+        {QUICK_START.map((item) => (
+          <li key={item.app}>
+            <button
+              type="button"
+              onClick={(e) => (item.app === "spotlight" ? store.dispatch({ type: "spotlight", open: true }) : open(item.app, undefined, { trigger: e.currentTarget }))}
+              className="card flex h-full w-full items-center gap-3 p-3 text-left"
+            >
+              <AppIcon app={item.app} size={36} />
+              <span className="min-w-0">
+                <span className="block text-[13.5px] font-semibold text-fg">{item.title}</span>
+                <span className="block text-[12px] text-muted">{item.hint}</span>
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

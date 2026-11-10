@@ -14,6 +14,8 @@ export interface Prefs {
   dockMagnify: boolean;
   dockSize: (typeof DOCK_SIZES)[number];
   showBoot: boolean;
+  /** The quick-start panel at the top of Home. */
+  showTips: boolean;
 }
 
 export const DEFAULT_PREFS: Prefs = {
@@ -25,6 +27,7 @@ export const DEFAULT_PREFS: Prefs = {
   dockMagnify: true,
   dockSize: "medium",
   showBoot: true,
+  showTips: true,
 };
 
 export const PREFS_KEY = "shivam-os:prefs:v1";
@@ -49,6 +52,7 @@ export function parsePrefs(raw: unknown): Prefs {
     dockMagnify: bool(p.dockMagnify, DEFAULT_PREFS.dockMagnify),
     dockSize: oneOf(p.dockSize, DOCK_SIZES, DEFAULT_PREFS.dockSize),
     showBoot: bool(p.showBoot, DEFAULT_PREFS.showBoot),
+    showTips: bool(p.showTips, DEFAULT_PREFS.showTips),
   };
 }
 
@@ -81,6 +85,7 @@ export function applyPrefs(prefs: Prefs, root: HTMLElement = document.documentEl
   root.dataset.wallpaper = prefs.wallpaper;
   root.dataset.motion = prefs.motion;
   root.dataset.dock = prefs.dockSize;
+  root.dataset.tips = prefs.showTips ? "on" : "off";
 }
 
 /**
@@ -93,4 +98,4 @@ export const PREFS_BOOT_SCRIPT = `(function(){try{var d=document.documentElement
   ACCENTS,
 )},"blue");d.dataset.glass=ok(p.glass,["clear","balanced","tinted","solid"],"balanced");d.dataset.wallpaper=ok(p.wallpaper,${JSON.stringify(
   WALLPAPERS,
-)},"aurora");d.dataset.motion=ok(p.motion,["system","full","reduced","off"],"system");d.dataset.dock=ok(p.dockSize,["small","medium","large"],"medium");var seen=false;try{seen=sessionStorage.getItem("shivam-os:booted")==="1"}catch(e){}if(p.showBoot===false||seen)d.dataset.skipBoot="true"}catch(e){}})();`;
+)},"aurora");d.dataset.motion=ok(p.motion,["system","full","reduced","off"],"system");d.dataset.dock=ok(p.dockSize,["small","medium","large"],"medium");d.dataset.tips=p.showTips===false?"off":"on";var seen=false;try{seen=sessionStorage.getItem("shivam-os:booted")==="1"}catch(e){}if(p.showBoot===false||seen)d.dataset.skipBoot="true"}catch(e){}})();`;

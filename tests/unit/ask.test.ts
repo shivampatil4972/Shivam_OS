@@ -258,7 +258,7 @@ describe("Ask server: answers and sources", () => {
 
 describe("analytics URL redaction", () => {
   it("keeps the view parameters and drops everything else", () => {
-    expect(redactAnalyticsUrl("https://shivam-os.vercel.app/xray?system=journex&email=a%40b.c#x")).toBe("https://shivam-os.vercel.app/xray?system=journex");
-    expect(redactAnalyticsUrl("https://shivam-os.vercel.app/projects/journex?utm_source=x")).toBe("https://shivam-os.vercel.app/projects/journex");
+    expect(redactAnalyticsUrl("https://shivam-os-tau.vercel.app/xray?system=journex&email=a%40b.c#x")).toBe("https://shivam-os-tau.vercel.app/xray?system=journex");
+    expect(redactAnalyticsUrl("https://shivam-os-tau.vercel.app/projects/journex?utm_source=x")).toBe("https://shivam-os-tau.vercel.app/projects/journex");
   });
 });

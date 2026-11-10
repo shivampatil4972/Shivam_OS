@@ -6,11 +6,11 @@
 /* Design tokens                                                        */
 /* ------------------------------------------------------------------ */
 :root {
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", Inter, Roboto,
+  --font-sans: var(--font-geist), -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
-  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI Variable Display", "Segoe UI", Inter,
+  --font-display: var(--font-geist), -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
 
   --radius-window: 22px;
   --radius-card: 16px;
@@ -26,6 +26,8 @@
   --accent-strong: #1f5fe0;
   --accent-soft: color-mix(in oklab, var(--accent) 18%, transparent);
   --accent-ring: color-mix(in oklab, var(--accent) 60%, white 10%);
+  --accent-glow: color-mix(in oklab, var(--accent) 45%, transparent);
+  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 :root[data-accent="violet"] { --accent: #8b6cff; --accent-strong: #6a46e8; }
@@ -137,7 +139,8 @@ body {
   color: var(--fg);
   font-family: var(--font-sans);
   font-size: 15px;
-  line-height: 1.5;
+  line-height: 1.55;
+  letter-spacing: -0.003em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -161,7 +164,15 @@ a {
 
 .font-display {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.028em;
+}
+
+/* Headline gradient: foreground into the accent. */
+.text-gradient {
+  background: linear-gradient(100deg, var(--fg) 30%, var(--accent-text) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .sr-only-focusable:not(:focus):not(:focus-within) {
@@ -176,40 +187,84 @@ a {
 /* ------------------------------------------------------------------ */
 /* Glass materials                                                     */
 /* ------------------------------------------------------------------ */
-.glass {
-  position: relative;
-  background:
-    linear-gradient(var(--glass-tint), var(--glass-tint)),
-    rgba(var(--glass-rgb), var(--glass-alpha));
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
-  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
-  border: 1px solid var(--glass-edge);
-  box-shadow: inset 0 1px 0 var(--glass-shine);
+@layer components {
+  .glass {
+    position: relative;
+    background:
+      var(--noise),
+      linear-gradient(var(--glass-tint), var(--glass-tint)),
+      rgba(var(--glass-rgb), var(--glass-alpha));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+    border: 1px solid var(--glass-edge);
+    /* Shadow utilities compose with this inset highlight instead of replacing it. */
+    --tw-inset-shadow: inset 0 1px 0 var(--glass-shine);
+    box-shadow: inset 0 1px 0 var(--glass-shine);
+  }
+
+  /* A specular edge highlight that follows the rounded corners. */
+  .glass-edge::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(160deg, var(--glass-shine), transparent 38%, transparent 70%, color-mix(in oklab, var(--glass-shine) 50%, transparent));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Readability-sensitive content always sits on a near-solid surface. */
+  .surface {
+    background: color-mix(in oklab, var(--surface-solid) 92%, transparent);
+  }
+
+  .card {
+    position: relative;
+    background: var(--surface-sunken);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-card);
+    transition:
+      transform var(--dur) var(--ease-out),
+      border-color var(--dur) var(--ease-out),
+      background-color var(--dur) var(--ease-out),
+      box-shadow var(--dur) var(--ease-out);
+  }
+
+  /* Pointer spotlight: a soft accent light that follows the cursor across a card. */
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 260ms var(--ease-out);
+    background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 0%), color-mix(in oklab, var(--accent) 13%, transparent), transparent 62%);
+  }
+
+  .card:hover::after {
+    opacity: 1;
+  }
+
+  :is(button, a).card:hover {
+    transform: translateY(-2px);
+    border-color: var(--hairline-strong);
+    box-shadow: 0 16px 36px -20px rgba(0, 0, 0, 0.55);
+  }
 }
 
-/* A specular edge highlight that follows the rounded corners. */
-.glass-edge::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(160deg, var(--glass-shine), transparent 38%, transparent 70%, color-mix(in oklab, var(--glass-shine) 50%, transparent));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-/* Readability-sensitive content always sits on a near-solid surface. */
-.surface {
-  background: color-mix(in oklab, var(--surface-solid) 92%, transparent);
-}
-
-.card {
-  background: var(--surface-sunken);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-card);
+/* The focused window carries a faint accent rim and glow. */
+@media (min-width: 768px) {
+  [data-window][data-focused="true"] > section {
+    box-shadow:
+      inset 0 1px 0 var(--glass-shine),
+      0 0 0 1px color-mix(in oklab, var(--accent) 20%, transparent),
+      var(--shadow-window),
+      0 30px 90px -40px var(--accent-glow);
+  }
 }
 
 /* Unfocused windows drop their backdrop blur: fewer simultaneous blurs, same look. */
@@ -241,8 +296,15 @@ a {
   :root:not([data-motion="full"]) *::before,
   :root:not([data-motion="full"]) *::after {
     animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* "Reduced" keeps short interface transitions but stops decorative, ambient motion. */
+:root[data-motion="reduced"] .wp-orbs > span,
+:root[data-motion="reduced"] .dock-launch {
+  animation: none !important;
 }
 
 /* ------------------------------------------------------------------ */
@@ -303,7 +365,7 @@ a {
 @keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -313,6 +375,60 @@ a {
 
 .animate-fade-up {
   animation: fade-up 420ms var(--ease-out) both;
+}
+
+/* Windows opened after load reveal their content section by section. */
+[data-anim="in"] .scroll-area > div > * {
+  animation: fade-up 520ms var(--ease-out) both;
+}
+[data-anim="in"] .scroll-area > div > :nth-child(2) { animation-delay: 50ms; }
+[data-anim="in"] .scroll-area > div > :nth-child(3) { animation-delay: 100ms; }
+[data-anim="in"] .scroll-area > div > :nth-child(4) { animation-delay: 150ms; }
+[data-anim="in"] .scroll-area > div > :nth-child(5) { animation-delay: 200ms; }
+[data-anim="in"] .scroll-area > div > :nth-child(n + 6) { animation-delay: 250ms; }
+
+/* Dock: an app icon bounces once when its app launches. */
+@keyframes dock-launch {
+  0%, 100% { transform: translateY(0); }
+  22% { transform: translateY(-16px); }
+  44% { transform: translateY(0); }
+  64% { transform: translateY(-6px); }
+  82% { transform: translateY(0); }
+}
+.dock-launch {
+  display: block;
+  animation: dock-launch 900ms var(--ease-out) both;
+}
+
+/* Spotlight springs open over a fading scrim. */
+@keyframes spot-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.97);
+  }
+}
+@keyframes scrim-in {
+  from {
+    opacity: 0;
+  }
+}
+.spotlight-in {
+  animation: spot-in 260ms var(--ease-spring) both;
+}
+.scrim-in {
+  animation: scrim-in 180ms ease-out both;
+}
+
+/* Light/dark switch: a circular reveal (driven from script via the View Transitions API). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Quick-start panel on Home can be hidden from Settings; applied before first paint. */
+:root[data-tips="off"] .quick-start {
+  display: none;
 }
 
 /* ------------------------------------------------------------------ */
@@ -447,6 +563,31 @@ a {
 :root[data-wallpaper="mist"] .wp-mist {
   display: block;
 }
+
+.wp-orbs {
+  position: absolute;
+  inset: -15%;
+  pointer-events: none;
+}
+.wp-orbs > span {
+  position: absolute;
+  width: 58vmax;
+  height: 58vmax;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--orb), transparent);
+  opacity: 0.34;
+  will-change: transform;
+  animation: orb-a 36s ease-in-out infinite alternate;
+}
+.wp-orbs > span:nth-child(1) { --orb: var(--orb-1); left: -6%; top: -12%; }
+.wp-orbs > span:nth-child(2) { --orb: var(--orb-2); right: -12%; top: 4%; animation-name: orb-b; animation-duration: 44s; }
+.wp-orbs > span:nth-child(3) { --orb: var(--orb-3); left: 22%; bottom: -28%; animation-name: orb-c; animation-duration: 40s; }
+.wp-aurora .wp-orbs { --orb-1: var(--wp-a1); --orb-2: var(--wp-a2); --orb-3: var(--wp-a3); }
+.wp-tide .wp-orbs { --orb-1: var(--wp-t2); --orb-2: var(--wp-t3); --orb-3: var(--wp-t2); }
+.wp-mist .wp-orbs { --orb-1: var(--wp-m1); --orb-2: var(--wp-m2); --orb-3: var(--wp-m1); }
+@keyframes orb-a { to { transform: translate3d(14vw, 10vh, 0) scale(1.18); } }
+@keyframes orb-b { to { transform: translate3d(-16vw, 12vh, 0) scale(0.9); } }
+@keyframes orb-c { to { transform: translate3d(10vw, -14vh, 0) scale(1.12); } }
 
 /* Wallpaper thumbnails in Settings reuse the same palettes. */
 .wp-thumb-aurora { background: radial-gradient(70% 60% at 20% 20%, var(--wp-a1), transparent 70%), radial-gradient(60% 60% at 80% 30%, var(--wp-a2), transparent 70%), var(--wp-a0); }

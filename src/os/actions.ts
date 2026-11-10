@@ -2,7 +2,7 @@
 
 import type { SearchAction } from "@/lib/searchIndex";
 import { copyText, publishActivity } from "./state/activity";
-import { getPrefs, setPrefs } from "./state/prefs";
+import { switchTheme } from "./themeTransition";
 import type { useOS } from "./OSContext";
 
 type OS = ReturnType<typeof useOS>;
@@ -30,8 +30,8 @@ export function runSearchAction(os: OS, action: SearchAction, trigger?: HTMLElem
     }
     case "toggle-theme": {
       const dark = document.documentElement.dataset.theme !== "light";
-      setPrefs({ theme: dark ? "light" : "dark" });
-      publishActivity({ kind: "info", title: `${dark ? "Light" : "Dark"} mode`, detail: `Theme preference: ${getPrefs().theme}` });
+      switchTheme(dark ? "light" : "dark");
+      publishActivity({ kind: "info", title: `${dark ? "Light" : "Dark"} mode`, detail: `Theme preference: ${dark ? "light" : "dark"}` });
       break;
     }
   }

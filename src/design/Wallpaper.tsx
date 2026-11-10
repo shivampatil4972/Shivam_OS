@@ -1,7 +1,8 @@
 /**
  * Original vector wallpapers. All four render on the server; CSS shows the one
  * selected by <html data-wallpaper> and recolours it for the active theme, so
- * switching never flashes or downloads anything.
+ * switching never flashes or downloads anything. Soft light orbs drift slowly
+ * (transform only, on the compositor) and stop when motion is reduced.
  */
 const stop = (offset: string, color: string, opacity = 1) => (
   <stop offset={offset} style={{ stopColor: color, stopOpacity: opacity }} />
@@ -36,6 +37,11 @@ export function Wallpaper() {
           <path d="M-50 600C300 420 600 470 860 520s500 10 800-160" fill="none" style={{ stroke: "var(--wp-line)" }} strokeWidth="1.2" />
           <path d="M-50 640C320 470 620 520 880 560s500 0 780-170" fill="none" style={{ stroke: "var(--wp-line)", opacity: 0.6 }} strokeWidth="1" />
         </svg>
+        <div className="wp-orbs">
+          <span />
+          <span />
+          <span />
+        </div>
       </div>
 
       <div className="wp wp-graphite">
@@ -82,6 +88,11 @@ export function Wallpaper() {
           ))}
           <path d="M0 520C260 430 520 620 800 540s540-100 800-20" fill="none" style={{ stroke: "var(--wp-line)" }} strokeWidth="1.4" />
         </svg>
+        <div className="wp-orbs">
+          <span />
+          <span />
+          <span />
+        </div>
       </div>
 
       <div className="wp wp-mist">
@@ -103,6 +114,11 @@ export function Wallpaper() {
             <circle key={i} cx={800} cy={500} r={160 + i * 110} fill="none" style={{ stroke: "var(--wp-line)" }} strokeWidth="1" opacity={0.7 - i * 0.1} />
           ))}
         </svg>
+        <div className="wp-orbs">
+          <span />
+          <span />
+          <span />
+        </div>
       </div>
     </div>
   );

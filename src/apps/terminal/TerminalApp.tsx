@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { complete, execute } from "@/lib/terminal";
 import { useOS } from "@/os/OSContext";
 import { runSearchAction } from "@/os/actions";
-import { setPrefs } from "@/os/state/prefs";
+import { switchTheme } from "@/os/themeTransition";
 
 interface Line {
   id: number;
@@ -61,7 +61,7 @@ export default function TerminalApp() {
     const effect = out.effect;
     if (!effect) return;
     if (effect.kind === "open") os.open(effect.app, effect.params);
-    if (effect.kind === "theme") setPrefs({ theme: effect.theme });
+    if (effect.kind === "theme") switchTheme(effect.theme);
     if (effect.kind === "download") runSearchAction(os, { kind: "download", href: effect.href, fileName: effect.fileName });
   };
 

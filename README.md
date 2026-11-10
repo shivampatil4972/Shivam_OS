@@ -9,9 +9,9 @@ Case studies, architecture X-rays, research and a live ML experiment — each cl
 
 <br />
 
-<a href="https://shivam-os.vercel.app"><img src="https://img.shields.io/badge/Open_SHIVAM.OS-3d82ff?style=for-the-badge&logo=vercel&logoColor=white" alt="Open the live site" /></a>
-<a href="https://shivam-os.vercel.app/recruiter"><img src="https://img.shields.io/badge/Recruiter_Mode-8b6cff?style=for-the-badge&logo=handshake&logoColor=white" alt="Recruiter Mode" /></a>
-<a href="https://shivam-os.vercel.app/resume"><img src="https://img.shields.io/badge/R%C3%A9sum%C3%A9-1f2937?style=for-the-badge&logo=readdotcv&logoColor=white" alt="Résumé" /></a>
+<a href="https://shivam-os-tau.vercel.app"><img src="https://img.shields.io/badge/Open_SHIVAM.OS-3d82ff?style=for-the-badge&logo=vercel&logoColor=white" alt="Open the live site" /></a>
+<a href="https://shivam-os-tau.vercel.app/recruiter"><img src="https://img.shields.io/badge/Recruiter_Mode-8b6cff?style=for-the-badge&logo=handshake&logoColor=white" alt="Recruiter Mode" /></a>
+<a href="https://shivam-os-tau.vercel.app/resume"><img src="https://img.shields.io/badge/R%C3%A9sum%C3%A9-1f2937?style=for-the-badge&logo=readdotcv&logoColor=white" alt="Résumé" /></a>
 
 <br />
 
@@ -174,6 +174,7 @@ flowchart LR
 | Framework | Next.js 16 (App Router, static prerendering), React 19 |
 | Language | TypeScript 6 — `strict`, `noUncheckedIndexedAccess` |
 | Styling | Tailwind CSS 4, CSS custom properties for themes, glass and accents |
+| Typography | Geist and Geist Mono, self-hosted with `next/font` |
 | Motion | Motion for React (`LazyMotion` + DOM features only) |
 | Forms & validation | React Hook Form, Zod |
 | AI | Google Gemini API (`@google/genai`) with schema-checked JSON answers that cite passage ids; server-only |
@@ -215,7 +216,7 @@ Measured by `npm run qc` on **10 November 2026** (Node 24, Windows, Chrome 157).
 | Unit tests | ✅ 231 / 231 |
 | End-to-end (desktop + mobile) | ✅ 225 / 225, 0 flaky |
 | Accessibility (axe-core, WCAG 2.2 A/AA) | ✅ 0 violations in 72 scans — 18 routes, light & dark, desktop & mobile |
-| Performance (lab, throttled mobile) | ✅ LCP 0.17–1.15 s, CLS 0, blocking time 0–115 ms (lab numbers vary between runs) |
+| Performance (lab, throttled mobile) | ⚠️ Desktop within targets. Mobile blocking time 1.0–1.6 s in the latest run, measured on battery power (throttled CPU); the earlier mains-power run measured 0–115 ms. To be re-measured on mains power |
 | Links | ⚠️ 0 broken of 93; LinkedIn and LeetCode block automated checks |
 | Dependencies | ⚠️ 0 production advisories; 7 moderate in dev-only ESLint tooling |
 | CI (GitHub Actions, Ubuntu) | ✅ Latest run passed (0ee52a9): install, typecheck, lint, unit, build, Playwright |

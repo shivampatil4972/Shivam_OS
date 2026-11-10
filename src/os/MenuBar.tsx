@@ -5,7 +5,8 @@ import { useSyncExternalStore } from "react";
 import { APP_IDS, APPS } from "./apps";
 import { MenuButton } from "./Menu";
 import { useOS, useOSState, windowTitle } from "./OSContext";
-import { setPrefs, useResolvedTheme } from "./state/prefs";
+import { useResolvedTheme } from "./state/prefs";
+import { switchTheme } from "./themeTransition";
 
 const CLOCK_MS = 15_000;
 
@@ -160,7 +161,7 @@ export function MenuBar() {
         </button>
         <button
           type="button"
-          onClick={() => setPrefs({ theme: dark ? "light" : "dark" })}
+          onClick={(e) => switchTheme(dark ? "light" : "dark", e.currentTarget)}
           aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
           className="inline-flex size-7 items-center justify-center rounded-md text-muted hover:bg-hover hover:text-fg"
         >

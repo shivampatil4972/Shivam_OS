@@ -47,9 +47,9 @@ export function Desktop() {
             <button
               type="button"
               onClick={(e) => s.run(e.currentTarget)}
-              className="flex w-24 flex-col items-center gap-1.5 rounded-xl p-2 text-center text-[12px] font-medium text-fg [text-shadow:0_1px_2px_var(--bg)] hover:bg-hover focus-visible:bg-hover"
+              className="group flex w-24 flex-col items-center gap-1.5 rounded-xl p-2 text-center text-[12px] font-medium text-fg [text-shadow:0_1px_2px_var(--bg)] hover:bg-hover focus-visible:bg-hover"
             >
-              <span className="grid size-12 place-items-center rounded-xl bg-[rgba(var(--glass-rgb),0.55)] text-fg shadow-lg ring-1 ring-[var(--glass-edge)] backdrop-blur-sm">{s.icon}</span>
+              <span className="grid size-12 place-items-center rounded-xl bg-[rgba(var(--glass-rgb),0.55)] text-fg shadow-lg ring-1 ring-[var(--glass-edge)] backdrop-blur-sm transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105">{s.icon}</span>
               {s.label}
             </button>
           </li>
@@ -133,9 +133,9 @@ export function MobileHome() {
         <ul className="mt-6 grid grid-cols-4 gap-x-2 gap-y-5" aria-label="Apps">
           {apps.map((id) => (
             <li key={id} className="flex justify-center">
-              <button type="button" onClick={() => open(id)} className="flex w-[72px] flex-col items-center gap-1.5 rounded-2xl p-1 active:scale-95">
+              <button type="button" onClick={() => open(id)} aria-label={APPS[id].title} className="flex w-[76px] flex-col items-center gap-1.5 rounded-2xl p-1 transition-transform active:scale-95">
                 <AppIcon app={id} size={58} />
-                <span className="w-full truncate text-center text-[11.5px] font-medium text-fg [text-shadow:0_1px_2px_rgba(0,0,0,0.25)]">{APPS[id].title}</span>
+                <span className="w-full truncate text-center text-[11.5px] font-medium text-fg [text-shadow:0_1px_2px_rgba(0,0,0,0.25)]">{APPS[id].shortTitle ?? APPS[id].title}</span>
               </button>
             </li>
           ))}

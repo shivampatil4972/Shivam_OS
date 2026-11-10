@@ -1,10 +1,15 @@
 import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 import { profile } from "@/content/profile";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import { SiteAnalytics } from "@/os/SiteAnalytics";
 import { PREFS_BOOT_SCRIPT } from "@/os/state/prefsCore";
 import "./globals.css";
+
+/** Geist: a modern grotesk for UI and headings; Geist Mono for code. Self-hosted at build time. */
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" });
 
 /** Page-view analytics run only on the production Vercel deployment (set by Vercel at build time). */
 const ANALYTICS = process.env.VERCEL_ENV === "production";
@@ -55,7 +60,7 @@ const personJsonLd = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" data-theme="dark" data-accent="blue" data-glass="balanced" data-wallpaper="aurora" data-motion="system" suppressHydrationWarning>
+    <html lang="en" data-theme="dark" data-accent="blue" data-glass="balanced" data-wallpaper="aurora" data-motion="system" data-tips="on" className={`${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: PREFS_BOOT_SCRIPT }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />

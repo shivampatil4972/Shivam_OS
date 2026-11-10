@@ -33,7 +33,7 @@ pull request. Its first run (commit `fb53f7f`, 3 November 2026) passed every ste
 
 | Variable | Needed for | Notes |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical URLs, sitemap, Open Graph | Your final origin, e.g. `https://shivampatil.dev`. Defaults to `https://shivam-os.vercel.app`. |
+| `NEXT_PUBLIC_SITE_URL` | Canonical URLs, sitemap, Open Graph | Your final origin, e.g. `https://shivampatil.dev`. Defaults to `https://shivam-os-tau.vercel.app`. |
 | `FORMSPREE_FORM_ID` | Contact form delivery (option A) | The ID from a Formspree form endpoint (`https://formspree.io/f/<ID>`). |
 | `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL` | Contact form delivery (option B) | `CONTACT_FROM_EMAIL` must be on a domain verified in Resend. |
 | `GEMINI_API_KEY` | Ask SHIVAM.OS | A Gemini API key from Google AI Studio. Without it the app says it is switched off. See section 4. |

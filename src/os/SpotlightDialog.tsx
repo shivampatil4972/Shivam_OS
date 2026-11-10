@@ -69,13 +69,13 @@ export default function SpotlightDialog() {
   const activeId = results[active] ? `spot-opt-${results[active]!.id}` : undefined;
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-start justify-center bg-black/30 px-4 pt-[12vh] backdrop-blur-[2px] max-md:p-0" onPointerDown={(e) => e.target === e.currentTarget && close()}>
+    <div className="scrim-in fixed inset-0 z-[60] flex items-start justify-center bg-black/30 px-4 pt-[12vh] backdrop-blur-[2px] max-md:p-0" onPointerDown={(e) => e.target === e.currentTarget && close()}>
       <div
         ref={dialog}
         role="dialog"
         aria-modal="true"
         aria-label="Spotlight search"
-        className="glass glass-edge w-full max-w-[640px] overflow-hidden rounded-[20px] shadow-[var(--shadow-window)] max-md:h-full max-md:max-w-none max-md:rounded-none"
+        className="spotlight-in glass glass-edge w-full max-w-[640px] overflow-hidden rounded-[20px] shadow-[var(--shadow-window)] max-md:h-full max-md:max-w-none max-md:rounded-none"
       >
         <div className="flex items-center gap-3 border-b border-hairline px-4 max-md:pt-[env(safe-area-inset-top)]">
           <Search className="size-5 shrink-0 text-muted" aria-hidden />

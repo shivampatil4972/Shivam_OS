@@ -5,6 +5,7 @@ import { Button, Segmented, Toggle } from "@/design/ui";
 import { cn } from "@/lib/cn";
 import { publishActivity } from "@/os/state/activity";
 import { ACCENTS, WALLPAPERS, resetPrefs, setPrefs, usePrefs, type Prefs } from "@/os/state/prefs";
+import { switchTheme } from "@/os/themeTransition";
 import { AppScroll } from "../shared";
 
 const ACCENT_SWATCH: Record<Prefs["accent"], string> = {
@@ -32,7 +33,7 @@ export default function SettingsApp() {
             name="theme"
             label="Theme"
             value={prefs.theme}
-            onChange={(theme) => setPrefs({ theme })}
+            onChange={(theme) => switchTheme(theme, document.activeElement instanceof HTMLElement ? document.activeElement : null)}
             options={[
               { value: "system", label: "Automatic" },
               { value: "dark", label: "Dark" },
@@ -135,10 +136,16 @@ export default function SettingsApp() {
         </Row>
       </Group>
 
+      <Group title="Help">
+        <Row label="Quick start">
+          <Toggle checked={prefs.showTips} onChange={(showTips) => setPrefs({ showTips })} label="Show the quick-start panel on Home" description="Shortcuts to projects, Ask SHIVAM.OS, Recruiter Mode and search." />
+        </Row>
+      </Group>
+
       <div className="mt-8 flex items-center justify-between rounded-2xl border border-hairline p-4">
         <div>
           <p className="font-medium text-fg">Reset all settings</p>
-          <p className="text-[13px] text-muted">Restore the defaults for theme, glass, accent, wallpaper, motion and dock.</p>
+          <p className="text-[13px] text-muted">Restore the defaults for theme, glass, accent, wallpaper, motion, dock and quick start.</p>
         </div>
         <Button
           variant="danger"

@@ -15,8 +15,8 @@ import { cn } from "@/lib/cn";
 type Variant = "primary" | "secondary" | "ghost" | "danger";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-accent-strong text-white hover:brightness-110 shadow-[0_6px_18px_-6px_var(--accent)]",
-  secondary: "bg-sunken text-fg border border-hairline hover:bg-hover",
+  primary: "bg-accent-strong text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_6px_18px_-6px_var(--accent)] hover:-translate-y-px hover:brightness-110 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_12px_28px_-8px_var(--accent)]",
+  secondary: "bg-sunken text-fg border border-hairline hover:bg-hover hover:border-hairline-strong hover:-translate-y-px",
   ghost: "text-fg hover:bg-hover",
   danger: "bg-danger/15 text-danger border border-danger/30 hover:bg-danger/25",
 };
@@ -28,7 +28,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLBut
         ref={ref}
         type={type}
         className={cn(
-          "inline-flex items-center justify-center gap-2 rounded-[var(--radius-control)] font-medium transition-[filter,background-color,transform] duration-150 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50",
+          "inline-flex items-center justify-center gap-2 rounded-[var(--radius-control)] font-medium transition-[filter,background-color,border-color,box-shadow,transform] duration-150 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50",
           size === "sm" ? "h-8 px-3 text-[13px]" : "h-10 px-4 text-sm",
           variants[variant],
           className,
@@ -67,7 +67,7 @@ export function LinkButton({
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-[var(--radius-control)] font-medium no-underline transition-[filter,background-color] duration-150",
+        "inline-flex items-center justify-center gap-2 rounded-[var(--radius-control)] font-medium no-underline transition-[filter,background-color,border-color,box-shadow,transform] duration-150",
         size === "sm" ? "h-8 px-3 text-[13px]" : "h-10 px-4 text-sm",
         variants[variant],
         className,

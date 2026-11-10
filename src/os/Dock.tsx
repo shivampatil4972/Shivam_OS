@@ -115,7 +115,9 @@ export function Dock() {
                 )}
                 style={{ width: base, height: base, transform: magnify ? `scale(${scale})` : undefined, marginInline: magnify ? (scale - 1) * base * 0.5 : undefined }}
               >
-                <MemoIcon app={app} size={base} />
+                <span key={st ? "open" : "closed"} className={st ? "dock-launch" : "block"}>
+                  <MemoIcon app={app} size={base} />
+                </span>
               </button>
               <span
                 aria-hidden

@@ -44,7 +44,7 @@ test.describe("Spotlight", () => {
   test("Escape closes it and restores focus", async ({ page }, info) => {
     onlyDesktop(info);
     await page.goto("/");
-    const trigger = page.getByRole("button", { name: /^Search/ });
+    const trigger = page.getByRole("banner").getByRole("button", { name: /^Search/ });
     await trigger.click();
     await expect(page.getByRole("dialog", { name: "Spotlight search" })).toBeVisible();
     await page.keyboard.press("Escape");
@@ -476,6 +476,8 @@ test.describe("Ask SHIVAM.OS", () => {
   }
 
   test("says honestly that it is off when no API key is configured", async ({ page }) => {
+    // Independent of the machine's own .env.local: simulate a deployment without a key.
+    await page.route("**/api/ask", (route) => route.fulfill({ json: { configured: false, model: null, freeTier: true } }));
     await page.goto("/ask");
     await ready(page);
     await expect(page.getByText("isn't switched on for this deployment")).toBeVisible();

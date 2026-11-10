@@ -166,6 +166,17 @@ if (serverUp) {
   });
 
   // 7. Performance (lab) -------------------------------------------------------------------
+  // Laptops slow their CPU on battery; record the power source so the numbers are read in context.
+  const onBattery = (() => {
+    try {
+      if (process.platform === "win32") {
+        const r = spawnSync("powershell", ["-NoProfile", "-Command", "(Get-CimInstance Win32_Battery).BatteryStatus"], { encoding: "utf8" });
+        return r.stdout.trim() === "1";
+      }
+      if (process.platform === "linux" && existsSync("/sys/class/power_supply/AC/online")) return readFileSync("/sys/class/power_supply/AC/online", "utf8").trim() === "0";
+    } catch {}
+    return false;
+  })();
   const perfOut = path.join(raw, "perf.json");
   const p = run("node", ["scripts/perf-probe.mjs", "--base", BASE, "--json", rel("perf.json"), ...(channel ? ["--channel", channel] : [])]);
   const perf = readJson(perfOut);
@@ -179,9 +190,11 @@ if (serverUp) {
       ranAt: p.at,
       durationMs: p.ms,
       status: bad.length === 0 ? "passed" : "warning",
-      summary: bad.length === 0 ? "Every measured page is within LCP ≤ 2.5 s, CLS ≤ 0.1 and blocking time ≤ 200 ms." : `${bad.length} of ${perf.results.length} measurements exceed a target (LCP 2.5 s, CLS 0.1, blocking time 200 ms).`,
+      summary:
+        (bad.length === 0 ? "Every measured page is within LCP ≤ 2.5 s, CLS ≤ 0.1 and blocking time ≤ 200 ms." : `${bad.length} of ${perf.results.length} measurements exceed a target (LCP 2.5 s, CLS 0.1, blocking time 200 ms).`) +
+        (onBattery ? " Measured on battery power, which slows this laptop's CPU, so these numbers are pessimistic." : ""),
       metrics: perf.results.map((x) => ({ label: `${x.profile} ${x.route}`, value: `LCP ${(x.lcpMs / 1000).toFixed(2)} s · CLS ${x.cls} · TBT ${x.tbtMs} ms · JS ${x.jsKB} KB` })),
-      details: [perf.method, perf.browser ? `Browser: ${perf.browser}` : null, "These are lab numbers from one machine, not field data from real visitors."].filter(Boolean),
+      details: [perf.method, perf.browser ? `Browser: ${perf.browser}` : null, `Power: ${onBattery ? "battery (CPU throttled by the OS)" : "mains / not on battery"}.`, "These are lab numbers from one machine, not field data from real visitors."].filter(Boolean),
     });
   } else {
     add({ id: "performance", title: "Performance (lab)", category: "performance", command: "node scripts/perf-probe.mjs", ranAt: p.at, durationMs: p.ms, status: "failed", summary: "The performance probe did not complete.", details: tail(p.out) });

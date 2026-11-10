@@ -9,6 +9,7 @@ import { Desktop, MobileHome } from "./Desktop";
 import { Dock } from "./Dock";
 import { MenuBar } from "./MenuBar";
 import { OSProvider } from "./OSContext";
+import { PointerEffects } from "./PointerEffects";
 import { BootScreen, DesktopContextMenu, Overview, ShortcutsDialog } from "./Overlays";
 import type { Intent } from "./routes";
 import { Spotlight } from "./Spotlight";
@@ -50,6 +51,7 @@ export function OSRoot({ intent, initialContent }: { intent: Intent; initialCont
         <Overview />
         <DesktopContextMenu />
         <ShortcutsDialog />
+        <PointerEffects />
         <p id="window-move-hint" className="sr-only">
           Use the arrow keys to move this window.
         </p>
